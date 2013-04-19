@@ -1,0 +1,364 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3A28A11A17218F890031EA9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A11917218F890031EA9B /* Foundation.framework */; };
+		3A28A11F17218F890031EA9B /* RWBlurPopover.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A28A11E17218F890031EA9B /* RWBlurPopover.h */; };
+		3A28A12117218F890031EA9B /* RWBlurPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A28A12017218F890031EA9B /* RWBlurPopover.m */; };
+		3A28A12D1721902E0031EA9B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A1271721902E0031EA9B /* CoreMedia.framework */; };
+		3A28A12E1721902E0031EA9B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A1281721902E0031EA9B /* CoreVideo.framework */; };
+		3A28A12F1721902E0031EA9B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A1291721902E0031EA9B /* OpenGLES.framework */; };
+		3A28A1301721902E0031EA9B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A12A1721902E0031EA9B /* QuartzCore.framework */; };
+		3A28A1311721902E0031EA9B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A12B1721902E0031EA9B /* AVFoundation.framework */; };
+		3A28A1321721902E0031EA9B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A12C1721902E0031EA9B /* UIKit.framework */; };
+		3A28A13F172190B10031EA9B /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A13A1721904B0031EA9B /* libGPUImage.a */; };
+		3A28A17B17219A5A0031EA9B /* RWBlurPopover.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A28A11E17218F890031EA9B /* RWBlurPopover.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3A28A1391721904B0031EA9B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3A28A1331721904A0031EA9B /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		3A28A13B1721904B0031EA9B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3A28A1331721904A0031EA9B /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A34414DDB1EC00852800;
+			remoteInfo = GPUImageTests;
+		};
+		3A28A13D172190570031EA9B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3A28A1331721904A0031EA9B /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCF1A33314DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3A28A11417218F890031EA9B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				3A28A11F17218F890031EA9B /* RWBlurPopover.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3A28A11617218F890031EA9B /* libRWBlurPopover.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRWBlurPopover.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A28A11917218F890031EA9B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3A28A11D17218F890031EA9B /* RWBlurPopover-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RWBlurPopover-Prefix.pch"; sourceTree = "<group>"; };
+		3A28A11E17218F890031EA9B /* RWBlurPopover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RWBlurPopover.h; sourceTree = "<group>"; };
+		3A28A12017218F890031EA9B /* RWBlurPopover.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RWBlurPopover.m; sourceTree = "<group>"; };
+		3A28A1271721902E0031EA9B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		3A28A1281721902E0031EA9B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		3A28A1291721902E0031EA9B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		3A28A12A1721902E0031EA9B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3A28A12B1721902E0031EA9B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		3A28A12C1721902E0031EA9B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3A28A1331721904A0031EA9B /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = GPUImage/framework/GPUImage.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3A28A11317218F890031EA9B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A28A13F172190B10031EA9B /* libGPUImage.a in Frameworks */,
+				3A28A11A17218F890031EA9B /* Foundation.framework in Frameworks */,
+				3A28A12D1721902E0031EA9B /* CoreMedia.framework in Frameworks */,
+				3A28A12E1721902E0031EA9B /* CoreVideo.framework in Frameworks */,
+				3A28A12F1721902E0031EA9B /* OpenGLES.framework in Frameworks */,
+				3A28A1301721902E0031EA9B /* QuartzCore.framework in Frameworks */,
+				3A28A1311721902E0031EA9B /* AVFoundation.framework in Frameworks */,
+				3A28A1321721902E0031EA9B /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3A28A10D17218F890031EA9B = {
+			isa = PBXGroup;
+			children = (
+				3A28A11B17218F890031EA9B /* RWBlurPopover */,
+				3A28A11817218F890031EA9B /* Frameworks */,
+				3A28A11717218F890031EA9B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3A28A11717218F890031EA9B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3A28A11617218F890031EA9B /* libRWBlurPopover.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3A28A11817218F890031EA9B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3A28A1331721904A0031EA9B /* GPUImage.xcodeproj */,
+				3A28A1271721902E0031EA9B /* CoreMedia.framework */,
+				3A28A1281721902E0031EA9B /* CoreVideo.framework */,
+				3A28A1291721902E0031EA9B /* OpenGLES.framework */,
+				3A28A12A1721902E0031EA9B /* QuartzCore.framework */,
+				3A28A12B1721902E0031EA9B /* AVFoundation.framework */,
+				3A28A12C1721902E0031EA9B /* UIKit.framework */,
+				3A28A11917218F890031EA9B /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3A28A11B17218F890031EA9B /* RWBlurPopover */ = {
+			isa = PBXGroup;
+			children = (
+				3A28A11E17218F890031EA9B /* RWBlurPopover.h */,
+				3A28A12017218F890031EA9B /* RWBlurPopover.m */,
+				3A28A11C17218F890031EA9B /* Supporting Files */,
+			);
+			path = RWBlurPopover;
+			sourceTree = "<group>";
+		};
+		3A28A11C17218F890031EA9B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3A28A11D17218F890031EA9B /* RWBlurPopover-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3A28A1341721904A0031EA9B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3A28A13A1721904B0031EA9B /* libGPUImage.a */,
+				3A28A13C1721904B0031EA9B /* GPUImageTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3A28A17A17219A540031EA9B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A28A17B17219A5A0031EA9B /* RWBlurPopover.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3A28A11517218F890031EA9B /* RWBlurPopover */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A28A12417218F890031EA9B /* Build configuration list for PBXNativeTarget "RWBlurPopover" */;
+			buildPhases = (
+				3A28A11217218F890031EA9B /* Sources */,
+				3A28A11317218F890031EA9B /* Frameworks */,
+				3A28A11417218F890031EA9B /* CopyFiles */,
+				3A28A17A17219A540031EA9B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3A28A13E172190570031EA9B /* PBXTargetDependency */,
+			);
+			name = RWBlurPopover;
+			productName = RWBlurPopover;
+			productReference = 3A28A11617218F890031EA9B /* libRWBlurPopover.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3A28A10E17218F890031EA9B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Fresh-Ideas Studio";
+			};
+			buildConfigurationList = 3A28A11117218F890031EA9B /* Build configuration list for PBXProject "RWBlurPopover" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3A28A10D17218F890031EA9B;
+			productRefGroup = 3A28A11717218F890031EA9B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3A28A1341721904A0031EA9B /* Products */;
+					ProjectRef = 3A28A1331721904A0031EA9B /* GPUImage.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				3A28A11517218F890031EA9B /* RWBlurPopover */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3A28A13A1721904B0031EA9B /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = 3A28A1391721904B0031EA9B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3A28A13C1721904B0031EA9B /* GPUImageTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GPUImageTests.octest;
+			remoteRef = 3A28A13B1721904B0031EA9B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3A28A11217218F890031EA9B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A28A12117218F890031EA9B /* RWBlurPopover.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3A28A13E172190570031EA9B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImage;
+			targetProxy = 3A28A13D172190570031EA9B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3A28A12217218F890031EA9B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3A28A12317218F890031EA9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3A28A12517218F890031EA9B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/RWBlurPopover.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RWBlurPopover/RWBlurPopover-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/GPUImage/framework\"/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = include/RWBlurPopover;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3A28A12617218F890031EA9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/RWBlurPopover.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RWBlurPopover/RWBlurPopover-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/GPUImage/framework\"/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = include/RWBlurPopover;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3A28A11117218F890031EA9B /* Build configuration list for PBXProject "RWBlurPopover" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A28A12217218F890031EA9B /* Debug */,
+				3A28A12317218F890031EA9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A28A12417218F890031EA9B /* Build configuration list for PBXNativeTarget "RWBlurPopover" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A28A12517218F890031EA9B /* Debug */,
+				3A28A12617218F890031EA9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3A28A10E17218F890031EA9B /* Project object */;
+}
