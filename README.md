@@ -14,13 +14,16 @@ Installation
 ----
 
 1. Add to your project as a submodule:
+
 ```
 git add submodule https://github.com/eternityz/RWBlurPopover.git RWBlurPopover
+git submodule update --init --recursive
 ```
-1. Open your project in Xcode, drag and drop `RWBlurPopover.xcodeproj` onto your project or workspace.
-1. Select your target in project settings, and go to the **Build Phases** tab. Add RWBlurPopover into **Target Dependencies**. Add `libRWBlurPopover.a` into **Link Binary With Libraries**. 
-1. Add these frameworks to your project (required by GPUImage): CoreMedia, CoreVideo, OpenGLES, QuartzCore, AVFoundation.
-1. Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
+
+2. Open your project in Xcode, drag and drop `RWBlurPopover.xcodeproj` onto your project or workspace.
+3. Select your target in project settings, and go to the **Build Phases** tab. Add RWBlurPopover into **Target Dependencies**. Add `libRWBlurPopover.a` into **Link Binary With Libraries**. 
+4. Add these frameworks to your project (required by GPUImage): CoreMedia, CoreVideo, OpenGLES, QuartzCore, AVFoundation.
+5. Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
 
 Useage
 ----
