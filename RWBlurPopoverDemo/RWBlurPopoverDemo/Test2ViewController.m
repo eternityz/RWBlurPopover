@@ -54,10 +54,10 @@
                   ];
     l.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     l.backgroundColor = [UIColor clearColor];
-    l.textColor = [UIColor whiteColor];
+    l.textColor = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [UIColor blackColor] : [UIColor whiteColor]);
     l.font = [UIFont boldSystemFontOfSize:18];
     l.textAlignment = UITextAlignmentCenter;
-    l.text = @"Regular View";
+    l.text = @"Test 2";
     [self.view addSubview:l];
 }
 

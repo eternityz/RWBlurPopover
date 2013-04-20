@@ -25,7 +25,7 @@
     l.textColor = [UIColor whiteColor];
     l.font = [UIFont boldSystemFontOfSize:18];
     l.textAlignment = UITextAlignmentCenter;
-    l.text = @"Inside Navigation Controller";
+    l.text = @"Test 1";
     [self.view addSubview:l];
 }
 
