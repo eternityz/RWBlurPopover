@@ -13,12 +13,10 @@ ARC is required.
 Installation
 ----
 
-1. Add to your project as a submodule:
-
-```
-git add submodule https://github.com/eternityz/RWBlurPopover.git RWBlurPopover
-git submodule update --init --recursive
-```
+1. Add to your project as a submodule: 
+    
+        git add submodule https://github.com/eternityz/RWBlurPopover.git RWBlurPopover
+        git submodule update --init --recursive
 
 2. Open your project in Xcode, drag and drop `RWBlurPopover.xcodeproj` onto your project or workspace.
 3. Select your target in project settings, and go to the **Build Phases** tab. Add RWBlurPopover into **Target Dependencies**. Add `libRWBlurPopover.a` into **Link Binary With Libraries**. 
