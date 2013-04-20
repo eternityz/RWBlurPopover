@@ -1,7 +1,7 @@
 RWBlurPopover
 =============
 
-Show a UIViewController in a popover with background blurred. Support iOS 5.1+ on iPhone and iPad. Inspired by Twitter #music.
+Show a UIViewController in a popover with background blurred. Support iOS 5.1+ on iPhone and iPad. Inspired by [Twitter #music](https://itunes.apple.com/us/app/twitter-music/id625541612).
 
 [![](http://zhangbin.cc/temp/blur-iphone-thumb.jpg)](http://zhangbin.cc/temp/blur-iphone.jpg)
 [![](http://zhangbin.cc/temp/blur-ipad-thumb.jpg)](http://zhangbin.cc/temp/blur-ipad.jpg)
