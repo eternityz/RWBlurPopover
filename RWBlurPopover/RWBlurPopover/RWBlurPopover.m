@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) UIImage *origImage;
 @property (nonatomic, strong) UIImageView *blurredImageView;
-@property (nonatomic, strong) UIView *blankCover;
+@property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) UIViewController *contentViewController;
 @property (nonatomic, strong) UIView *contentView;
 
@@ -72,12 +72,14 @@
 {
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     
-    // add a blank cover on top of rootViewController.view, to disable user interactions
-    self.blankCover = [[UIView alloc] initWithFrame:rootViewController.view.bounds];
-    self.blankCover.backgroundColor = [UIColor clearColor];
-    [rootViewController.view addSubview:self.blankCover];
+    // add a cover on top of rootViewController.view, to disable user interactions
+    self.coverImageView = [[UIImageView alloc] initWithFrame:rootViewController.view.bounds];
+    self.coverImageView.backgroundColor = [UIColor clearColor];
+    [rootViewController.view addSubview:self.coverImageView];
     
     self.origImage = [self imageFromView:rootViewController.view];
+    self.coverImageView.image = self.origImage;
+    
     self.blurredImageView = [[UIImageView alloc] initWithFrame:rootViewController.view.bounds];
     self.blurredImageView.backgroundColor = [UIColor clearColor];
     self.blurredImageView.alpha = 0;
@@ -101,6 +103,8 @@
                 [UIView animateWithDuration:0.4 animations:^{
                     self.blurredImageView.alpha = 1.0;
                 } completion:^(BOOL finished) {
+                    [self.coverImageView removeFromSuperview];
+                    self.coverImageView = nil;
                 }];
             }
             else
@@ -115,8 +119,6 @@
 {
     if (!animated)
     {
-        [self.blankCover removeFromSuperview];
-        self.blankCover = nil;
         [self.blurredImageView removeFromSuperview];
         self.blurredImageView = nil;
     }
@@ -125,8 +127,6 @@
         [UIView animateWithDuration:0.4 animations:^{
             self.blurredImageView.alpha = 0;
         } completion:^(BOOL finished) {
-            [self.blankCover removeFromSuperview];
-            self.blankCover = nil;
             [self.blurredImageView removeFromSuperview];
             self.blurredImageView = nil;
         }];
