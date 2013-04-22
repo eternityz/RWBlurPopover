@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) UIImage *origImage;
 @property (nonatomic, strong) UIImageView *blurredImageView;
+@property (nonatomic, strong) UIView *blankCover;
 @property (nonatomic, strong) UIViewController *contentViewController;
 @property (nonatomic, strong) UIView *contentView;
 
@@ -70,8 +71,15 @@
 - (void)prepareBlurredImage
 {
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    // add a blank cover on top of rootViewController.view, to disable user interactions
+    self.blankCover = [[UIView alloc] initWithFrame:rootViewController.view.bounds];
+    self.blankCover.backgroundColor = [UIColor clearColor];
+    [rootViewController.view addSubview:self.blankCover];
+    
     self.origImage = [self imageFromView:rootViewController.view];
     self.blurredImageView = [[UIImageView alloc] initWithFrame:rootViewController.view.bounds];
+    self.blurredImageView.backgroundColor = [UIColor clearColor];
     self.blurredImageView.alpha = 0;
     [rootViewController.view addSubview:self.blurredImageView];
 }
@@ -107,6 +115,8 @@
 {
     if (!animated)
     {
+        [self.blankCover removeFromSuperview];
+        self.blankCover = nil;
         [self.blurredImageView removeFromSuperview];
         self.blurredImageView = nil;
     }
@@ -115,6 +125,8 @@
         [UIView animateWithDuration:0.4 animations:^{
             self.blurredImageView.alpha = 0;
         } completion:^(BOOL finished) {
+            [self.blankCover removeFromSuperview];
+            self.blankCover = nil;
             [self.blurredImageView removeFromSuperview];
             self.blurredImageView = nil;
         }];

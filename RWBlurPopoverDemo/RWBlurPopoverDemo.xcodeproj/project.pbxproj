@@ -404,6 +404,7 @@
 				3A28A168172193EA0031EA9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
