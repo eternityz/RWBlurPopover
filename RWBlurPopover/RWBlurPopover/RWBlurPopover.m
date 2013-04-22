@@ -186,6 +186,10 @@
     {
         [self removeBlurredViewAnimated:YES];
         [[UIApplication sharedApplication].keyWindow.rootViewController dismissModalViewControllerAnimated:YES];
+        if (completion)
+        {
+            completion();
+        }
     }
     else
     {
@@ -203,6 +207,10 @@
             [self.contentViewController viewDidDisappear:YES];
             self.contentViewController = nil;
             [self removeBlurredViewAnimated:NO];
+            if (completion)
+            {
+                completion();
+            }
         }];
     }
     
