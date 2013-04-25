@@ -23,7 +23,7 @@
 
 @implementation RWBlurPopover
 
-+ (RWBlurPopover *)instance
++ (instancetype)instance
 {
     static RWBlurPopover *_instance = nil;
     static dispatch_once_t onceToken;

@@ -10,7 +10,7 @@
 
 @interface RWBlurPopover : NSObject
 
-+ (RWBlurPopover *)instance;
++ (instancetype)instance;
 
 - (void)presentViewController:(UIViewController *)viewController withHeight:(CGFloat)height;
 - (void)dismissViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
