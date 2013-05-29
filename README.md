@@ -15,7 +15,7 @@ Installation
 
 1. Add to your project as a submodule: 
     
-        git add submodule https://github.com/eternityz/RWBlurPopover.git RWBlurPopover
+        git submodule add https://github.com/eternityz/RWBlurPopover.git RWBlurPopover
         git submodule update --init --recursive
 
 2. Open your project in Xcode, drag and drop `RWBlurPopover.xcodeproj` onto your project or workspace.
