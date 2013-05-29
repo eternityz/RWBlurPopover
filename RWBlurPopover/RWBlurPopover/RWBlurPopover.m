@@ -91,26 +91,27 @@
 
 - (void)presentBlurredViewAnimated:(BOOL)animated
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"before filter");
         GPUImageFastBlurFilter *filter = [[GPUImageFastBlurFilter alloc] init];
         filter.blurSize = [UIScreen mainScreen].scale * 2;
         filter.blurPasses = 5;
         
-        self.blurredImageView.image = [filter imageByFilteringImage:self.origImage];
+        weakSelf.blurredImageView.image = [filter imageByFilteringImage:weakSelf.origImage];
         NSLog(@"after filter");
-        self.origImage = nil;
+        weakSelf.origImage = nil;
         dispatch_sync(dispatch_get_main_queue(), ^{
             if (animated)
             {
                 [UIView animateWithDuration:0.4 animations:^{
-                    self.blurredImageView.alpha = 1.0;
+                    weakSelf.blurredImageView.alpha = 1.0;
                 } completion:^(BOOL finished) {
                 }];
             }
             else
             {
-                self.blurredImageView.alpha = 1.0;
+                weakSelf.blurredImageView.alpha = 1.0;
             }
         });
     });
