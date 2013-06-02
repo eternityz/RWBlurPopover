@@ -6,10 +6,34 @@
 //  Copyright (c) 2013年 Fresh-Ideas Studio. All rights reserved.
 //
 
+#import <sys/types.h>
+#import <sys/sysctl.h>
 #import <QuartzCore/QuartzCore.h>
 #import <GPUImage.h>
 #import "RWBlurPopover.h"
 
+@interface UIDevice (Platform)
+
+- (NSString *)platform;
+
+@end
+
+@implementation UIDevice (Platform)
+
+- (NSString *) platform
+{
+    // https://gist.github.com/Jaybles/1323251
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *machine = malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    NSString *platform = [NSString stringWithUTF8String:machine];
+    free(machine);
+    machine = nil;
+    return platform;
+}
+
+@end
 
 @interface RWBlurPopover ()
 
@@ -22,6 +46,29 @@
 @end
 
 @implementation RWBlurPopover
+
+- (BOOL)shouldWorkOnThisDevice
+{
+    if (!self.skipOldDevices)
+    {
+        return YES;
+    }
+    
+    NSString *platform = [[UIDevice currentDevice] platform];
+    if ([platform hasPrefix:@"iPhone"] && [platform compare:@"iPhone4,1"] == NSOrderedAscending)
+    {
+        return NO;
+    }
+    if ([platform hasPrefix:@"iPod"] && [platform compare:@"iPod5,1"] == NSOrderedAscending)
+    {
+        return NO;
+    }
+    if ([platform hasPrefix:@"iPad"] && [platform compare:@"iPad2,1"] == NSOrderedAscending)
+    {
+        return NO;
+    }
+    return YES;
+}
 
 + (instancetype)instance
 {
@@ -70,6 +117,10 @@
 
 - (void)prepareBlurredImage
 {
+    if (![self shouldWorkOnThisDevice])
+    {
+        return;
+    }
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     
     // add a cover on top of rootViewController.view, to disable user interactions
@@ -91,13 +142,15 @@
 
 - (void)presentBlurredViewAnimated:(BOOL)animated
 {
+    if (![self shouldWorkOnThisDevice])
+    {
+        return;
+    }
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"before filter");
-        GPUImageFastBlurFilter *filter = [[GPUImageFastBlurFilter alloc] init];
-        filter.blurSize = [UIScreen mainScreen].scale * 2;
-        filter.blurPasses = 5;
-        
+        GPUImageGaussianBlurFilter *filter = [[GPUImageGaussianBlurFilter alloc] init];
+        filter.blurSize = [UIScreen mainScreen].scale * 4;
         weakSelf.blurredImageView.image = [filter imageByFilteringImage:weakSelf.origImage];
         NSLog(@"after filter");
         weakSelf.origImage = nil;
@@ -119,6 +172,10 @@
 
 - (void)removeBlurredViewAnimated:(BOOL)animated
 {
+    if (![self shouldWorkOnThisDevice])
+    {
+        return;
+    }
     if (!animated)
     {
         [self.coverView removeFromSuperview];
@@ -143,10 +200,10 @@
 {
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     self.contentViewController = viewController;
-    [self prepareBlurredImage];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
+        [self prepareBlurredImage];
         self.contentViewController.modalPresentationStyle = UIModalPresentationFormSheet;
         [rootViewController presentModalViewController:self.contentViewController animated:YES];
         [self presentBlurredViewAnimated:YES];
@@ -162,7 +219,8 @@
         self.contentViewController.view.frame = self.contentView.bounds;
         
         [rootViewController viewWillDisappear:YES];
-        [rootViewController.view addSubview:self.contentView];
+        // [rootViewController.view addSubview:self.contentView];
+        [[UIApplication sharedApplication].keyWindow addSubview:self.contentView];
         
         [self.contentViewController viewWillAppear:YES];
         
@@ -173,6 +231,7 @@
                                                 height
                                                 );
         } completion:^(BOOL finished) {
+            [self prepareBlurredImage];
             [self presentBlurredViewAnimated:YES];
             [self.contentViewController viewDidAppear:YES];
             [rootViewController viewDidDisappear:YES];
