@@ -117,10 +117,6 @@
 
 - (void)prepareBlurredImage
 {
-    if (![self shouldWorkOnThisDevice])
-    {
-        return;
-    }
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     
     // add a cover on top of rootViewController.view, to disable user interactions
@@ -130,6 +126,11 @@
     coverImageView.backgroundColor = [UIColor clearColor];
     [self.coverView addSubview:coverImageView];
     [rootViewController.view addSubview:self.coverView];
+    
+    if (![self shouldWorkOnThisDevice])
+    {
+        return;
+    }
     
     self.origImage = [self imageFromView:rootViewController.view];
     coverImageView.image = self.origImage;
@@ -172,10 +173,6 @@
 
 - (void)removeBlurredViewAnimated:(BOOL)animated
 {
-    if (![self shouldWorkOnThisDevice])
-    {
-        return;
-    }
     if (!animated)
     {
         [self.coverView removeFromSuperview];
