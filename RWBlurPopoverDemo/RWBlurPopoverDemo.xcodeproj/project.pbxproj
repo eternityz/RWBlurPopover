@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3A28A14D172193EA0031EA9B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A14C172193EA0031EA9B /* UIKit.framework */; };
 		3A28A14F172193EA0031EA9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A14E172193EA0031EA9B /* Foundation.framework */; };
-		3A28A151172193EA0031EA9B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A150172193EA0031EA9B /* CoreGraphics.framework */; };
 		3A28A157172193EA0031EA9B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A28A155172193EA0031EA9B /* InfoPlist.strings */; };
 		3A28A159172193EA0031EA9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A28A158172193EA0031EA9B /* main.m */; };
 		3A28A15D172193EA0031EA9B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A28A15C172193EA0031EA9B /* AppDelegate.m */; };
@@ -19,17 +18,14 @@
 		3A28A17E17219AD30031EA9B /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A28A17D17219AD30031EA9B /* DemoViewController.m */; };
 		3A28A1811721AC760031EA9B /* Test1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A28A1801721AC760031EA9B /* Test1ViewController.m */; };
 		3A28A1821721AF570031EA9B /* libRWBlurPopover.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A1751721942B0031EA9B /* libRWBlurPopover.a */; };
-		3A28A1881721AF6E0031EA9B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A1831721AF6E0031EA9B /* CoreMedia.framework */; };
-		3A28A1891721AF6E0031EA9B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A1841721AF6E0031EA9B /* CoreVideo.framework */; };
-		3A28A18A1721AF6E0031EA9B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A1851721AF6E0031EA9B /* OpenGLES.framework */; };
-		3A28A18B1721AF6E0031EA9B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A1861721AF6E0031EA9B /* QuartzCore.framework */; };
-		3A28A18C1721AF6E0031EA9B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A28A1871721AF6E0031EA9B /* AVFoundation.framework */; };
 		3A28A18F1721B0700031EA9B /* Test2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A28A18E1721B0700031EA9B /* Test2ViewController.m */; };
 		3A28A1921721B08C0031EA9B /* popover_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A28A1901721B08C0031EA9B /* popover_bg.png */; };
 		3A28A1931721B08C0031EA9B /* popover_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A28A1911721B08C0031EA9B /* popover_bg@2x.png */; };
 		3A28A1961721B3760031EA9B /* btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A28A1941721B3760031EA9B /* btn.png */; };
 		3A28A1971721B3760031EA9B /* btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A28A1951721B3760031EA9B /* btn@2x.png */; };
 		3A28A1991721B8720031EA9B /* pic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A28A1981721B8720031EA9B /* pic.jpg */; };
+		3A33DB5C190688E700369A67 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A33DB5B190688E700369A67 /* Accelerate.framework */; };
+		3A33DB6019069BDE00369A67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A33DB5F19069BDE00369A67 /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +49,6 @@
 		3A28A149172193EA0031EA9B /* RWBlurPopoverDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RWBlurPopoverDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A28A14C172193EA0031EA9B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A28A14E172193EA0031EA9B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		3A28A150172193EA0031EA9B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3A28A154172193EA0031EA9B /* RWBlurPopoverDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RWBlurPopoverDemo-Info.plist"; sourceTree = "<group>"; };
 		3A28A156172193EA0031EA9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A28A158172193EA0031EA9B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -68,11 +63,6 @@
 		3A28A17D17219AD30031EA9B /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		3A28A17F1721AC760031EA9B /* Test1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test1ViewController.h; sourceTree = "<group>"; };
 		3A28A1801721AC760031EA9B /* Test1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test1ViewController.m; sourceTree = "<group>"; };
-		3A28A1831721AF6E0031EA9B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = "<absolute>"; };
-		3A28A1841721AF6E0031EA9B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
-		3A28A1851721AF6E0031EA9B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = "<absolute>"; };
-		3A28A1861721AF6E0031EA9B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
-		3A28A1871721AF6E0031EA9B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = "<absolute>"; };
 		3A28A18D1721B0700031EA9B /* Test2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test2ViewController.h; sourceTree = "<group>"; };
 		3A28A18E1721B0700031EA9B /* Test2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test2ViewController.m; sourceTree = "<group>"; };
 		3A28A1901721B08C0031EA9B /* popover_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = popover_bg.png; path = RWBlurPopoverDemo/popover_bg.png; sourceTree = "<group>"; };
@@ -80,6 +70,8 @@
 		3A28A1941721B3760031EA9B /* btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn.png; path = RWBlurPopoverDemo/btn.png; sourceTree = "<group>"; };
 		3A28A1951721B3760031EA9B /* btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn@2x.png"; path = "RWBlurPopoverDemo/btn@2x.png"; sourceTree = "<group>"; };
 		3A28A1981721B8720031EA9B /* pic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = pic.jpg; path = RWBlurPopoverDemo/pic.jpg; sourceTree = "<group>"; };
+		3A33DB5B190688E700369A67 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		3A33DB5F19069BDE00369A67 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,15 +79,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A33DB6019069BDE00369A67 /* CoreGraphics.framework in Frameworks */,
+				3A33DB5C190688E700369A67 /* Accelerate.framework in Frameworks */,
 				3A28A1821721AF570031EA9B /* libRWBlurPopover.a in Frameworks */,
 				3A28A14D172193EA0031EA9B /* UIKit.framework in Frameworks */,
 				3A28A14F172193EA0031EA9B /* Foundation.framework in Frameworks */,
-				3A28A151172193EA0031EA9B /* CoreGraphics.framework in Frameworks */,
-				3A28A1881721AF6E0031EA9B /* CoreMedia.framework in Frameworks */,
-				3A28A1891721AF6E0031EA9B /* CoreVideo.framework in Frameworks */,
-				3A28A18A1721AF6E0031EA9B /* OpenGLES.framework in Frameworks */,
-				3A28A18B1721AF6E0031EA9B /* QuartzCore.framework in Frameworks */,
-				3A28A18C1721AF6E0031EA9B /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,14 +116,10 @@
 		3A28A14B172193EA0031EA9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3A28A1831721AF6E0031EA9B /* CoreMedia.framework */,
-				3A28A1841721AF6E0031EA9B /* CoreVideo.framework */,
-				3A28A1851721AF6E0031EA9B /* OpenGLES.framework */,
-				3A28A1861721AF6E0031EA9B /* QuartzCore.framework */,
-				3A28A1871721AF6E0031EA9B /* AVFoundation.framework */,
+				3A33DB5F19069BDE00369A67 /* CoreGraphics.framework */,
+				3A33DB5B190688E700369A67 /* Accelerate.framework */,
 				3A28A14C172193EA0031EA9B /* UIKit.framework */,
 				3A28A14E172193EA0031EA9B /* Foundation.framework */,
-				3A28A150172193EA0031EA9B /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

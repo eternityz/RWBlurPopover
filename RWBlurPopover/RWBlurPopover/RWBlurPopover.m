@@ -9,8 +9,8 @@
 #import <sys/types.h>
 #import <sys/sysctl.h>
 #import <QuartzCore/QuartzCore.h>
-#import <GPUImage.h>
 #import "RWBlurPopover.h"
+#import "RWBlurImage.h"
 
 @interface UIDevice (Platform)
 
@@ -20,7 +20,7 @@
 
 @implementation UIDevice (Platform)
 
-- (NSString *) platform
+- (NSString *)platform
 {
     // https://gist.github.com/Jaybles/1323251
     size_t size;
@@ -41,7 +41,6 @@
 @property (nonatomic, strong) UIImageView *blurredImageView;
 @property (nonatomic, strong) UIView *coverView;
 @property (nonatomic, strong) UIViewController *contentViewController;
-@property (nonatomic, strong) UIView *contentView;
 
 @end
 
@@ -80,19 +79,6 @@
     return _instance;
 }
 
-- (id)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.contentView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.contentView.backgroundColor = [UIColor clearColor];
-        self.contentView.alpha = 1.0;
-        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    }
-    return self;
-}
-
 - (UIImage *)imageFromView:(UIView *)v
 {
     CGSize size = v.bounds.size;
@@ -103,11 +89,18 @@
     
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
     
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    
-    CGContextScaleCTM(ctx, scale, scale);
-    
-    [v.layer renderInContext:ctx];
+    if ([v respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)])
+    {
+        [v drawViewHierarchyInRect:(CGRect){.origin = CGPointZero, .size = size} afterScreenUpdates:YES];
+    }
+    else
+    {
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        
+        CGContextScaleCTM(ctx, scale, scale);
+        
+        [v.layer renderInContext:ctx];
+    }
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -147,25 +140,21 @@
     {
         return;
     }
-    __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"before filter");
-        GPUImageGaussianBlurFilter *filter = [[GPUImageGaussianBlurFilter alloc] init];
-        filter.blurSize = [UIScreen mainScreen].scale * 4;
-        weakSelf.blurredImageView.image = [filter imageByFilteringImage:weakSelf.origImage];
-        NSLog(@"after filter");
-        weakSelf.origImage = nil;
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        UIImage *blurredImage = [RWBlurImage blurImage:self.origImage withRadius:30 tintColor:nil saturationDeltaFactor:1.0 maskImage:nil];
+        self.origImage = nil;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.blurredImageView.image = blurredImage;
             if (animated)
             {
                 [UIView animateWithDuration:0.4 animations:^{
-                    weakSelf.blurredImageView.alpha = 1.0;
+                    self.blurredImageView.alpha = 1.0;
                 } completion:^(BOOL finished) {
                 }];
             }
             else
             {
-                weakSelf.blurredImageView.alpha = 1.0;
+                self.blurredImageView.alpha = 1.0;
             }
         });
     });
@@ -198,40 +187,34 @@
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     self.contentViewController = viewController;
     
+    [self prepareBlurredImage];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        [self prepareBlurredImage];
         self.contentViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [rootViewController presentModalViewController:self.contentViewController animated:YES];
-        [self presentBlurredViewAnimated:YES];
+        [rootViewController presentViewController:self.contentViewController animated:YES completion:^{
+            [self presentBlurredViewAnimated:YES];
+        }];
     }
     else
     {
-        self.contentView.frame = CGRectMake(0,
-                                            rootViewController.view.bounds.size.height,
-                                            rootViewController.view.bounds.size.width,
-                                            height
-                                            );
-        [self.contentView addSubview:self.contentViewController.view];
-        self.contentViewController.view.frame = self.contentView.bounds;
+        CGRect rect = CGRectMake(0,
+                                 rootViewController.view.bounds.size.height,
+                                 rootViewController.view.bounds.size.width,
+                                 height
+                                 );
+        self.contentViewController.view.frame = rect;
         
-        [rootViewController viewWillDisappear:YES];
-        // [rootViewController.view addSubview:self.contentView];
-        [[UIApplication sharedApplication].keyWindow addSubview:self.contentView];
         
-        [self.contentViewController viewWillAppear:YES];
+        [rootViewController addChildViewController:self.contentViewController];
+        [rootViewController.view addSubview:self.contentViewController.view];
         
         [UIView animateWithDuration:0.4 animations:^{
-            self.contentView.frame = CGRectMake(0,
-                                                rootViewController.view.bounds.size.height - height,
-                                                rootViewController.view.bounds.size.width,
-                                                height
-                                                );
+            CGRect newRect = rect;
+            newRect.origin.y -= height;
+            self.contentViewController.view.frame = newRect;
         } completion:^(BOOL finished) {
-            [self prepareBlurredImage];
+            [self.contentViewController didMoveToParentViewController:rootViewController];
             [self presentBlurredViewAnimated:YES];
-            [self.contentViewController viewDidAppear:YES];
-            [rootViewController viewDidDisappear:YES];
         }];
     }
     
@@ -242,26 +225,19 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         [self removeBlurredViewAnimated:YES];
-        [[UIApplication sharedApplication].keyWindow.rootViewController dismissModalViewControllerAnimated:YES];
-        if (completion)
-        {
-            completion();
-        }
+        [self.contentViewController dismissViewControllerAnimated:YES completion:completion];
     }
     else
     {
-        [self.contentViewController viewWillDisappear:YES];
-        [[UIApplication sharedApplication].keyWindow.rootViewController viewWillAppear:YES];
+        [self.contentViewController willMoveToParentViewController:nil];
         [UIView animateWithDuration:0.4 animations:^{
-            CGRect rect = self.contentView.frame;
+            CGRect rect = self.contentViewController.view.frame;
             rect.origin.y += rect.size.height;
-            self.contentView.frame = rect;
+            self.contentViewController.view.frame = rect;
             self.blurredImageView.alpha = 0;
         } completion:^(BOOL finished) {
-            [self.contentView removeFromSuperview];
             [self.contentViewController.view removeFromSuperview];
-            [[UIApplication sharedApplication].keyWindow.rootViewController viewDidAppear:YES];
-            [self.contentViewController viewDidDisappear:YES];
+            [self.contentViewController removeFromParentViewController];
             self.contentViewController = nil;
             [self removeBlurredViewAnimated:NO];
             if (completion)

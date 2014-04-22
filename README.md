@@ -6,8 +6,6 @@ Show a UIViewController in a popover with background blurred. Support iOS 5.1+ o
 [![](http://zhangbin.cc/temp/blur-iphone-thumb.jpg)](http://zhangbin.cc/temp/blur-iphone.jpg)
 [![](http://zhangbin.cc/temp/blur-ipad-thumb.jpg)](http://zhangbin.cc/temp/blur-ipad.jpg)
 
-This project uses GPUImageFastBlurFilter from [GPUImage](https://github.com/BradLarson/GPUImage) to do the blurring. [GPUImage](https://github.com/BradLarson/GPUImage) is faster than Core Image CIGaussianFilter according to this article [Blur Effect in iOS Applications](http://blog.denivip.ru/index.php/2013/01/blur-effect-in-ios-applications/?lang=en), and CIGaussianFilter is only available on iOS 6+, while GPUImage supports iOS 4.0+.
-
 ARC is required.
 
 Installation

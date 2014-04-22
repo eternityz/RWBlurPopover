@@ -18,7 +18,6 @@
 - (void)loadView
 {
     [super loadView];
-    
     UILabel *l = [[UILabel alloc] initWithFrame:self.view.bounds];
     l.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     l.backgroundColor = [UIColor clearColor];
@@ -36,7 +35,8 @@
 
 - (void)next
 {
-    [self.navigationController pushViewController:[UIViewController new] animated:YES];
+    UIViewController *vc = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)viewDidLoad

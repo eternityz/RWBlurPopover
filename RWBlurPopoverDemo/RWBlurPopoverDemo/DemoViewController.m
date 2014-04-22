@@ -31,11 +31,8 @@
 {
     Test1ViewController *vc = [Test1ViewController new];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     nav.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
-    nav.navigationBar.translucent = YES;
-    nav.navigationBar.opaque = YES;
-    nav.navigationBar.tintColor = [UIColor clearColor];
-    nav.navigationBar.backgroundColor = [UIColor clearColor];
     [[RWBlurPopover instance] presentViewController:nav withHeight:self.view.frame.size.height - 150];
 }
 
