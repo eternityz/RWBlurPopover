@@ -18,7 +18,7 @@ Installation
 
 2. Open your project in Xcode, drag and drop `RWBlurPopover.xcodeproj` onto your project or workspace.
 3. Select your target in project settings, and go to the **Build Phases** tab. Add RWBlurPopover into **Target Dependencies**. Add `libRWBlurPopover.a` into **Link Binary With Libraries**. 
-4. Add these frameworks to your project (required by GPUImage): CoreMedia, CoreVideo, OpenGLES, QuartzCore, AVFoundation.
+4. Add these frameworks to your project: Accelerate, CoreGraphics.
 5. Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
 
 Useage
