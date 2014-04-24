@@ -1,12 +1,12 @@
 RWBlurPopover
 =============
 
-Show a UIViewController in a popover with background blurred. Support iOS 5.1+ on iPhone and iPad. Inspired by [Twitter #music](https://itunes.apple.com/us/app/twitter-music/id625541612).
+Show a UIViewController in a popover with background blurred. Support iOS 5.1+ on iPhone and iPad. Inspired by [Twitter #music](https://itunes.apple.com/us/app/twitter-music/id625541612). ARC is required.
 
-[![](http://zhangbin.cc/temp/blur-iphone-thumb.jpg)](http://zhangbin.cc/temp/blur-iphone.jpg)
-[![](http://zhangbin.cc/temp/blur-ipad-thumb.jpg)](http://zhangbin.cc/temp/blur-ipad.jpg)
+[![](http://zhangbin.cc/temp/RWBlurPopover/demo-iPhone.jpg)](http://zhangbin.cc/temp/RWBlurPopover/demo-iPhone.mp4)
+[![](http://zhangbin.cc/temp/RWBlurPopover/demo-iPad.jpg)](http://zhangbin.cc/temp/RWBlurPopover/demo-iPad.mp4)
 
-ARC is required.
+Click on the images above to view demo videos.
 
 Installation
 ----
@@ -14,7 +14,6 @@ Installation
 1. Add to your project as a submodule: 
     
         git submodule add https://github.com/eternityz/RWBlurPopover.git RWBlurPopover
-        git submodule update --init --recursive
 
 2. Open your project in Xcode, drag and drop `RWBlurPopover.xcodeproj` onto your project or workspace.
 3. Select your target in project settings, and go to the **Build Phases** tab. Add RWBlurPopover into **Target Dependencies**. Add `libRWBlurPopover.a` into **Link Binary With Libraries**. 
