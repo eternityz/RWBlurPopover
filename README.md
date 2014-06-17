@@ -11,14 +11,24 @@ Click on the images above to view demo videos.
 Installation
 ----
 
-1. Add to your project as a submodule: 
-    
-        git submodule add https://github.com/eternityz/RWBlurPopover.git RWBlurPopover
+### Install via [Cocoapods](http://cocoapods.org) (recommended):
 
-2. Open your project in Xcode, drag and drop `RWBlurPopover.xcodeproj` onto your project or workspace.
-3. Select your target in project settings, and go to the **Build Phases** tab. Add RWBlurPopover into **Target Dependencies**. Add `libRWBlurPopover.a` into **Link Binary With Libraries**. 
-4. Add these frameworks to your project: Accelerate, CoreGraphics.
-5. Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
+1.  Add a pod description into your `podfile`:
+
+            pod `RWBlurPopover`
+
+2.  Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
+
+### Install via git submodule:
+
+1.  Add to your project as a submodule: 
+
+            git submodule add https://github.com/eternityz/RWBlurPopover.git RWBlurPopover
+
+2.  Open your project in Xcode, drag and drop `RWBlurPopover.xcodeproj` onto your project or workspace.
+3.  Select your target in project settings, and go to the **Build Phases** tab. Add RWBlurPopover into **Target Dependencies**. Add `libRWBlurPopover.a` into **Link Binary With Libraries**. 
+4.  Add these frameworks to your project: Accelerate, CoreGraphics.
+5.  Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
 
 Useage
 ----
