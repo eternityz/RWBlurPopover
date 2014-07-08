@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.summary      = "Show a UIViewController in a popover with background blurred. "
 
   s.description  = <<-DESC
-                   Show a UIViewController in a popover with background blurred. 
+                   Show a UIViewController in a popover with background blurred. Based on iOS7 UIKit Dynamics and custom UIViewController transitions.
                    DESC
 
   s.homepage     = "https://github.com/eternityz/RWBlurPopover"
