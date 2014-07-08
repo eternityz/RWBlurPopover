@@ -1,25 +1,25 @@
 //
-//  AppDelegate.m
+//  RWAppDelegate.m
 //  RWBlurPopoverDemo
 //
-//  Created by Bin Zhang on 13-4-19.
-//  Copyright (c) 2013年 Fresh-Ideas Studio. All rights reserved.
+//  Created by Zhang Bin on 2014-07-07.
+//  Copyright (c) 2014年 Zhang Bin. All rights reserved.
 //
 
-#import "AppDelegate.h"
-#import "DemoViewController.h"
+#import "RWAppDelegate.h"
+#import "RWDemoMainViewController.h"
 
-@implementation AppDelegate
+@implementation RWAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor blackColor];
+    self.window.backgroundColor = [UIColor whiteColor];
     
-    DemoViewController *vc = [[DemoViewController alloc] initWithNibName:nil bundle:nil];
+    RWDemoMainViewController *vc = [[RWDemoMainViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    nav.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    nav.navigationBar.barStyle = UIBarStyleBlack;
     
     self.window.rootViewController = nav;
     

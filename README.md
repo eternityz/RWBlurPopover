@@ -1,51 +1,43 @@
 RWBlurPopover
 =============
 
-Show a UIViewController in a popover with background blurred. Support iOS 5.1+ on iPhone and iPad. Inspired by [Twitter #music](https://itunes.apple.com/us/app/twitter-music/id625541612). ARC is required.
+Show a UIViewController in a popover with background blurred. Introduced in [China Air Quality Index](http://air.fresh-ideas.cc).
 
-[![](http://zhangbin.cc/temp/RWBlurPopover/demo-iPhone.jpg)](http://zhangbin.cc/temp/RWBlurPopover/demo-iPhone.mp4)
-[![](http://zhangbin.cc/temp/RWBlurPopover/demo-iPad.jpg)](http://zhangbin.cc/temp/RWBlurPopover/demo-iPad.mp4)
+[Demo Video](http://zhangbin.cc/temp/RWBlurPopover2/demo.mp4)
 
 Click on the images above to view demo videos.
+
+iOS 7.0+ is required. "Throwing away to dismiss" gesture is inspired by [Tweetbot](http://tapbots.com/software/tweetbot/).
+
+NOTE: Release 2.0.0 of RWBlurPopover is incompatible with previous releases.
 
 Installation
 ----
 
-### Install via [Cocoapods](http://cocoapods.org) (recommended):
+- Add a pod description into your `podfile`:
 
-1.  Add a pod description into your `podfile`:
+            pod 'RWBlurPopover', '~> 2.0.0'
 
-            pod `RWBlurPopover`
+OR
 
-2.  Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
-
-### Install via git submodule:
-
-1.  Add to your project as a submodule: 
-
-            git submodule add https://github.com/eternityz/RWBlurPopover.git RWBlurPopover
-
-2.  Open your project in Xcode, drag and drop `RWBlurPopover.xcodeproj` onto your project or workspace.
-3.  Select your target in project settings, and go to the **Build Phases** tab. Add RWBlurPopover into **Target Dependencies**. Add `libRWBlurPopover.a` into **Link Binary With Libraries**. 
-4.  Add these frameworks to your project: Accelerate, CoreGraphics.
-5.  Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
+- Clone this repo, drop `.h` and `.m` files from `RWBlurPopover` into your project.
 
 Useage
 ----
+- Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
+
 - Present a UIViewController inside a popover with background blurred:
 
 ```objective-c
-[[RWBlurPopover instance] presentViewController:viewController withHeight:300];
+UIViewController *popoverContentViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+RWBlurPopover *popover = [[RWBlurPopover alloc] initWithContentViewController:vc];
+[parentViewController presentViewController:popover animated:YES completion:nil];
 ```
-
-Note: On iPad, the `height` parameter is unused.
 
 - Dismiss the view controller presented by RWBlurPopover:
 
 ```objective-c
-[[RWBlurPopover instance] dismissViewControllerAnimated:YES completion:^(void){
-    // some completion work
-}];
+[popoverContentViewController dismissViewControllerAnimated:YES completion:nil];
 ```
 
 License
