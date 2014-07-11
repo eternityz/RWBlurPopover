@@ -42,7 +42,7 @@
     [super loadView];
     self.view.backgroundColor = [UIColor clearColor];
     self.view.clipsToBounds = NO;
-    self.contentViewController.view.autoresizingMask = 0;
+    self.contentViewController.view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self.view addSubview:self.contentViewController.view];
     
     if ([self isThrowingGestureEnabled])
@@ -50,17 +50,18 @@
         self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
         [self.contentViewController.view addGestureRecognizer:self.panGestureRecognizer];
     }
-}
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
+    
     // make content view controller center aligned
     CGRect frame = CGRectZero;
     frame.origin.x = (CGRectGetWidth(self.view.bounds) - self.contentViewController.preferredContentSize.width) / 2;
     frame.origin.y = (CGRectGetHeight(self.view.bounds) - self.contentViewController.preferredContentSize.height) / 2;
     frame.size = [self contentViewController].preferredContentSize;
     self.contentViewController.view.frame = frame;
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
 }
 
 - (void)viewDidLoad

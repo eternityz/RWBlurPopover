@@ -302,9 +302,9 @@ static CGFloat angleOfView(UIView *view)
         content.transform = CGAffineTransformIdentity;
         
         CGRect frame = CGRectZero;
-        frame.origin.x = (CGRectGetWidth(fromVC.view.bounds) - contentViewController.preferredContentSize.width) / 2;
-        frame.origin.y = (CGRectGetHeight(fromVC.view.bounds) - contentViewController.preferredContentSize.height) / 2;
         frame.size = contentViewController.preferredContentSize;
+        frame.origin.x = (CGRectGetWidth(fromVC.view.bounds) - frame.size.width) / 2;
+        frame.origin.y = (CGRectGetHeight(fromVC.view.bounds) - frame.size.height) / 2;
         
         content.frame = frame;
         
