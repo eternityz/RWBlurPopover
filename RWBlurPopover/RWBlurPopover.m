@@ -28,7 +28,10 @@
     {
         self.contentViewController = contentViewController;
         self.transitioningDelegate = self;
-        self.modalPresentationStyle = UIModalPresentationCustom;
+        
+        // UIModalPresentationCustom won't work after device rotated
+        self.modalPresentationStyle = UIModalPresentationCurrentContext;
+        
         self.throwingGestureEnabled = YES;
     }
     return self;
@@ -39,20 +42,25 @@
     [super loadView];
     self.view.backgroundColor = [UIColor clearColor];
     self.view.clipsToBounds = NO;
-    self.contentViewController.view.frame = self.view.bounds;
-    self.contentViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.contentViewController.view.autoresizingMask = 0;
     [self.view addSubview:self.contentViewController.view];
     
     if ([self isThrowingGestureEnabled])
     {
         self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-        [self.view addGestureRecognizer:self.panGestureRecognizer];
+        [self.contentViewController.view addGestureRecognizer:self.panGestureRecognizer];
     }
 }
 
-- (CGSize)preferredContentSize
+- (void)viewDidLayoutSubviews
 {
-    return [self.contentViewController preferredContentSize];
+    [super viewDidLayoutSubviews];
+    // make content view controller center aligned
+    CGRect frame = CGRectZero;
+    frame.origin.x = (CGRectGetWidth(self.view.bounds) - self.contentViewController.preferredContentSize.width) / 2;
+    frame.origin.y = (CGRectGetHeight(self.view.bounds) - self.contentViewController.preferredContentSize.height) / 2;
+    frame.size = [self contentViewController].preferredContentSize;
+    self.contentViewController.view.frame = frame;
 }
 
 - (void)viewDidLoad
@@ -64,16 +72,18 @@
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)gr
 {
+    CGPoint location = [gr locationInView:self.view];
+    
     switch (gr.state) {
         case UIGestureRecognizerStateBegan: {
             self.isInteractiveDismissal = YES;
             [self dismissViewControllerAnimated:YES completion:nil];
-            [self.interactiveTransitionController startInteractiveTransitionWithTouchLocation:[gr locationInView:self.view]];
+            [self.interactiveTransitionController startInteractiveTransitionWithTouchLocation:location];
             break;
         }
             
         case UIGestureRecognizerStateChanged: {
-            [self.interactiveTransitionController updateInteractiveTransitionWithTouchLocation:[gr locationInView:self.view]];
+            [self.interactiveTransitionController updateInteractiveTransitionWithTouchLocation:location];
             break;
         }
             
@@ -82,11 +92,11 @@
             self.isInteractiveDismissal = NO;
             if (fabs(velocity.x) + fabs(velocity.y) <= 1000 || gr.state == UIGestureRecognizerStateCancelled)
             {
-                [self.interactiveTransitionController cancelInteractiveTransitionWithTouchLocation:[gr locationInView:self.view]];
+                [self.interactiveTransitionController cancelInteractiveTransitionWithTouchLocation:location];
             }
             else
             {
-                [self.interactiveTransitionController finishInteractiveTransitionWithTouchLocation:[gr locationInView:self.view] velocity:velocity];
+                [self.interactiveTransitionController finishInteractiveTransitionWithTouchLocation:location velocity:velocity];
             }
             break;
         }
@@ -139,6 +149,11 @@
         return self.interactiveTransitionController;
     }
     return nil;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return [self.presentingViewController preferredStatusBarStyle];
 }
 
 @end

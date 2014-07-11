@@ -17,4 +17,6 @@
 /// set to YES if you want content view controller to be dismissed by "throwing away"
 @property (nonatomic, assign, getter = isThrowingGestureEnabled) BOOL throwingGestureEnabled;
 
+@property (nonatomic, weak, readonly) UIViewController *contentViewController;
+
 @end
