@@ -4,7 +4,7 @@ RWBlurPopover
 Show a UIViewController in a popover with background blurred. Introduced in [China Air Quality Index](http://air.fresh-ideas.cc).
 
 <p align="center">
-    <a href="http://zhangbin.cc/temp/RWBlurPopover2/demo.mp4"><img src="http://zhangbin.cc/temp/RWBlurPopover2/demo.gif" /></a>
+    <a href="http://zhangbin.cc/temp/RWBlurPopover2/demo.mp4"><img src="https://raw.github.com/eternityz/RWBlurPopover/master/demo.gif" /></a>
 </p>
 
 [Demo Video](http://zhangbin.cc/temp/RWBlurPopover2/demo.mp4)
