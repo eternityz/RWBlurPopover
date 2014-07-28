@@ -3,9 +3,11 @@ RWBlurPopover
 
 Show a UIViewController in a popover with background blurred. Introduced in [China Air Quality Index](http://air.fresh-ideas.cc).
 
-[Demo Video](http://zhangbin.cc/temp/RWBlurPopover2/demo.mp4)
+<p align="center">
+    <a href="http://zhangbin.cc/temp/RWBlurPopover2/demo.mp4"><img src="http://zhangbin.cc/temp/RWBlurPopover2/demo.gif" /></a>
+</p>
 
-Click on the images above to view demo videos.
+[Demo Video](http://zhangbin.cc/temp/RWBlurPopover2/demo.mp4)
 
 iOS 7.0+ is required. "Throwing away to dismiss" gesture is inspired by [Tweetbot](http://tapbots.com/software/tweetbot/).
 
