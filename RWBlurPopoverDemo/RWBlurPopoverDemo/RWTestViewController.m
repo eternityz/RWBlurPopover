@@ -14,9 +14,19 @@
 
 @implementation RWTestViewController
 
-- (CGSize)preferredContentSize
-{
+- (CGSize)preferredContentSize {
     return CGSizeMake(280, 160);
+}
+
+- (void)dismiss {
+    NSLog(@"content dismiss");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+    [self.view addGestureRecognizer:tap];
 }
 
 @end

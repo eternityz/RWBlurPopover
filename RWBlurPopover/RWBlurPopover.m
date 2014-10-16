@@ -6,155 +6,118 @@
 //  Copyright (c) 2014年 Zhang Bin. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "RWBlurPopover.h"
-#import "RWBlurPopoverTransitionController.h"
+#import "RWBlurPopoverView.h"
 
-@interface RWBlurPopover () <UIViewControllerTransitioningDelegate>
+
+@interface UIViewController (RWBlurPopover)
+
+- (void)RWBlurPopover_dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion;
+@property (nonatomic, strong) RWBlurPopover *RWBlurPopover_associatedPopover;
+
+@end
+
+
+@interface RWBlurPopover ()
 
 @property (nonatomic, weak) UIViewController *contentViewController;
-@property (nonatomic, strong) RWBlurPopoverTransitionController *transitionController;
-@property (nonatomic, strong) RWBlurPopoverInteractiveTransitionController *interactiveTransitionController;
-@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
-@property (nonatomic, assign) BOOL isInteractiveDismissal;
+@property (nonatomic, weak) UIViewController *presentingViewController;
+@property (nonatomic, strong) RWBlurPopoverView *popoverView;
 
 @end
 
 @implementation RWBlurPopover
 
-- (instancetype)initWithContentViewController:(UIViewController *)contentViewController
-{
-    self = [super initWithNibName:nil bundle:nil];
++ (void)load {
+    // use method swizzling to capture content view controller 'dismissViewController' message
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class viewControllerClass = [UIViewController class];
+        
+        SEL origSelector = @selector(dismissViewControllerAnimated:completion:);
+        SEL swizzledSelector = @selector(RWBlurPopover_dismissViewControllerAnimated:completion:);
+        
+        Method origMethod = class_getInstanceMethod(viewControllerClass, origSelector);
+        Method swizzledMethod = class_getInstanceMethod(viewControllerClass, swizzledSelector);
+        
+        BOOL didAddMethod = class_addMethod(viewControllerClass, origSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
+        
+        if (didAddMethod) {
+            class_replaceMethod(viewControllerClass, swizzledSelector, method_getImplementation(origMethod), method_getTypeEncoding(origMethod));
+        } else {
+            method_exchangeImplementations(origMethod, swizzledMethod);
+        }
+    });
+}
+
+- (instancetype)initWithContentViewController:(UIViewController *)contentViewController {
+    self = [super init];
     if (self)
     {
         self.contentViewController = contentViewController;
-        self.transitioningDelegate = self;
-        
-        // UIModalPresentationCustom won't work after device rotated
-        self.modalPresentationStyle = UIModalPresentationCurrentContext;
         
         self.throwingGestureEnabled = YES;
+        
+        self.contentViewController.RWBlurPopover_associatedPopover = self;
     }
     return self;
 }
 
-- (void)loadView
-{
-    [super loadView];
-    self.view.backgroundColor = [UIColor clearColor];
-    self.view.clipsToBounds = NO;
-    self.contentViewController.view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    [self.view addSubview:self.contentViewController.view];
+- (void)dealloc {
+    NSLog(@"dealloc");
+}
+
+- (void)showFromViewController:(UIViewController *)presentingViewController {
+    self.presentingViewController = presentingViewController;
     
-    if ([self isThrowingGestureEnabled])
-    {
-        self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-        [self.contentViewController.view addGestureRecognizer:self.panGestureRecognizer];
+    self.popoverView = [[RWBlurPopoverView alloc] initWithContentView:self.contentViewController.view contentSize:[self.contentViewController preferredContentSize]];
+    self.popoverView.frame = self.presentingViewController.view.bounds;
+    self.popoverView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.popoverView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+    [self.popoverView.blurView addGestureRecognizer:tapGesture];
+    
+    [self.presentingViewController addChildViewController:self.contentViewController];
+    [self.presentingViewController.view addSubview:self.popoverView];
+    [self.contentViewController didMoveToParentViewController:self.presentingViewController];
+}
+
+- (void)dismiss {
+    [self.contentViewController willMoveToParentViewController:nil];
+    [self.popoverView removeFromSuperview];
+    [self.contentViewController removeFromParentViewController];
+    
+    NSLog(@"dismiss");
+    self.contentViewController.RWBlurPopover_associatedPopover = nil;
+}
+
+@end
+
+@implementation UIViewController (RWBlurPopover_dismiss)
+
+- (void)RWBlurPopover_dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    RWBlurPopover *popover = self.RWBlurPopover_associatedPopover;
+    if (popover) {
+        // this view controller is displayed inside a RWBlurPopover
+        // and about to be dismissed
+        [popover dismiss];
+    } else {
+        // perform regular dismissal
+        [self RWBlurPopover_dismissViewControllerAnimated:flag completion:completion];
     }
     
-    // make content view controller center aligned
-    CGRect frame = CGRectZero;
-    frame.origin.x = (CGRectGetWidth(self.view.bounds) - self.contentViewController.preferredContentSize.width) / 2;
-    frame.origin.y = (CGRectGetHeight(self.view.bounds) - self.contentViewController.preferredContentSize.height) / 2;
-    frame.size = [self contentViewController].preferredContentSize;
-    self.contentViewController.view.frame = frame;
 }
 
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
+static const char *RWBlurPopoverKey = "RWBlurPopoverKey";
+
+- (RWBlurPopover *)RWBlurPopover_associatedPopover {
+    return objc_getAssociatedObject(self, RWBlurPopoverKey);
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self addChildViewController:self.contentViewController];
-    [self.contentViewController didMoveToParentViewController:self];
-}
-
-- (void)handlePanGesture:(UIPanGestureRecognizer *)gr
-{
-    CGPoint location = [gr locationInView:self.view];
-    
-    switch (gr.state) {
-        case UIGestureRecognizerStateBegan: {
-            self.isInteractiveDismissal = YES;
-            [self dismissViewControllerAnimated:YES completion:nil];
-            [self.interactiveTransitionController startInteractiveTransitionWithTouchLocation:location];
-            break;
-        }
-            
-        case UIGestureRecognizerStateChanged: {
-            [self.interactiveTransitionController updateInteractiveTransitionWithTouchLocation:location];
-            break;
-        }
-            
-        case UIGestureRecognizerStateEnded: case UIGestureRecognizerStateCancelled: {
-            CGPoint velocity = [gr velocityInView:self.view];
-            self.isInteractiveDismissal = NO;
-            if (fabs(velocity.x) + fabs(velocity.y) <= 1000 || gr.state == UIGestureRecognizerStateCancelled)
-            {
-                [self.interactiveTransitionController cancelInteractiveTransitionWithTouchLocation:location];
-            }
-            else
-            {
-                [self.interactiveTransitionController finishInteractiveTransitionWithTouchLocation:location velocity:velocity];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-- (RWBlurPopoverTransitionController *)transitionController
-{
-    @synchronized(self)
-    {
-        if (!_transitionController)
-        {
-            _transitionController = [RWBlurPopoverTransitionController new];
-        }
-        return _transitionController;
-    }
-}
-
-- (RWBlurPopoverInteractiveTransitionController *)interactiveTransitionController
-{
-    @synchronized(self)
-    {
-        if (!_interactiveTransitionController)
-        {
-            _interactiveTransitionController = [RWBlurPopoverInteractiveTransitionController new];
-        }
-        return _interactiveTransitionController;
-    }
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
-{
-    self.transitionController.isPresentation = YES;
-    return self.transitionController;
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
-{
-    self.transitionController.isPresentation = NO;
-    return self.transitionController;
-}
-
-- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator
-{
-    if ([self isInteractiveDismissal] && [animator isKindOfClass:[RWBlurPopoverTransitionController class]])
-    {
-        return self.interactiveTransitionController;
-    }
-    return nil;
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return [self.presentingViewController preferredStatusBarStyle];
+- (void)setRWBlurPopover_associatedPopover:(RWBlurPopover *)RWBlurPopover_associatedPopover {
+    objc_setAssociatedObject(self, RWBlurPopoverKey, RWBlurPopover_associatedPopover, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

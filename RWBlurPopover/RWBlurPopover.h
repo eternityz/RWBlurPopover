@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-@interface RWBlurPopover : UIViewController
+@interface RWBlurPopover : NSObject
 
 /// create a popover with a content view controller
 /// size of the popover is determined by [contentViewController preferredContentSize]
@@ -18,5 +18,7 @@
 @property (nonatomic, assign, getter = isThrowingGestureEnabled) BOOL throwingGestureEnabled;
 
 @property (nonatomic, weak, readonly) UIViewController *contentViewController;
+
+- (void)showFromViewController:(UIViewController *)presentingViewController;
 
 @end

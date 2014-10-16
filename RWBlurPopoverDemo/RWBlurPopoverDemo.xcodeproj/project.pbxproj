@@ -20,11 +20,11 @@
 		3A308E9B196A6DDC0030C75A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A308E99196A6DDC0030C75A /* InfoPlist.strings */; };
 		3A308E9D196A6DDC0030C75A /* RWBlurPopoverDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A308E9C196A6DDC0030C75A /* RWBlurPopoverDemoTests.m */; };
 		3A308EAC196A75850030C75A /* RWBlurPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A308EAB196A75850030C75A /* RWBlurPopover.m */; };
-		3A308EBB196A7B480030C75A /* RWBlurPopoverTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A308EBA196A7B480030C75A /* RWBlurPopoverTransitionController.m */; };
 		3A308EBD196A8B7E0030C75A /* pic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A308EBC196A8B7E0030C75A /* pic.jpg */; };
 		3A308EC0196A8BA70030C75A /* RWDemoMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A308EBF196A8BA70030C75A /* RWDemoMainViewController.m */; };
 		3A308EC4196A8D480030C75A /* RWTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A308EC2196A8D480030C75A /* RWTestViewController.m */; };
 		3A308EC5196A8D480030C75A /* RWTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A308EC3196A8D480030C75A /* RWTestViewController.xib */; };
+		3A9307F119EF86D100F089BA /* RWBlurPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9307F019EF86D100F089BA /* RWBlurPopoverView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,14 +56,14 @@
 		3A308E9C196A6DDC0030C75A /* RWBlurPopoverDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RWBlurPopoverDemoTests.m; sourceTree = "<group>"; };
 		3A308EAA196A75850030C75A /* RWBlurPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWBlurPopover.h; sourceTree = "<group>"; };
 		3A308EAB196A75850030C75A /* RWBlurPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWBlurPopover.m; sourceTree = "<group>"; };
-		3A308EB9196A7B480030C75A /* RWBlurPopoverTransitionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWBlurPopoverTransitionController.h; sourceTree = "<group>"; };
-		3A308EBA196A7B480030C75A /* RWBlurPopoverTransitionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWBlurPopoverTransitionController.m; sourceTree = "<group>"; };
 		3A308EBC196A8B7E0030C75A /* pic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic.jpg; sourceTree = "<group>"; };
 		3A308EBE196A8BA70030C75A /* RWDemoMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWDemoMainViewController.h; sourceTree = "<group>"; };
 		3A308EBF196A8BA70030C75A /* RWDemoMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWDemoMainViewController.m; sourceTree = "<group>"; };
 		3A308EC1196A8D480030C75A /* RWTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWTestViewController.h; sourceTree = "<group>"; };
 		3A308EC2196A8D480030C75A /* RWTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWTestViewController.m; sourceTree = "<group>"; };
 		3A308EC3196A8D480030C75A /* RWTestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RWTestViewController.xib; sourceTree = "<group>"; };
+		3A9307EF19EF86D100F089BA /* RWBlurPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWBlurPopoverView.h; sourceTree = "<group>"; };
+		3A9307F019EF86D100F089BA /* RWBlurPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWBlurPopoverView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,8 +172,8 @@
 			children = (
 				3A308EAA196A75850030C75A /* RWBlurPopover.h */,
 				3A308EAB196A75850030C75A /* RWBlurPopover.m */,
-				3A308EB9196A7B480030C75A /* RWBlurPopoverTransitionController.h */,
-				3A308EBA196A7B480030C75A /* RWBlurPopoverTransitionController.m */,
+				3A9307EF19EF86D100F089BA /* RWBlurPopoverView.h */,
+				3A9307F019EF86D100F089BA /* RWBlurPopoverView.m */,
 			);
 			name = RWBlurPopover;
 			path = ../RWBlurPopover;
@@ -277,9 +277,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A9307F119EF86D100F089BA /* RWBlurPopoverView.m in Sources */,
 				3A308EC4196A8D480030C75A /* RWTestViewController.m in Sources */,
 				3A308E84196A6DDC0030C75A /* main.m in Sources */,
-				3A308EBB196A7B480030C75A /* RWBlurPopoverTransitionController.m in Sources */,
 				3A308E88196A6DDC0030C75A /* RWAppDelegate.m in Sources */,
 				3A308EAC196A75850030C75A /* RWBlurPopover.m in Sources */,
 				3A308EC0196A8BA70030C75A /* RWDemoMainViewController.m in Sources */,
@@ -481,6 +481,7 @@
 				3A308EA2196A6DDC0030C75A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3A308EA3196A6DDC0030C75A /* Build configuration list for PBXNativeTarget "RWBlurPopoverDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +490,7 @@
 				3A308EA5196A6DDC0030C75A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
