@@ -15,4 +15,7 @@
 
 - (instancetype)initWithContentView:(UIView *)contentView contentSize:(CGSize)contentSize;
 
+- (void)animatePresentationWithCompletion:(void (^)(void))completion;
+- (void)animateDismissalWithCompletion:(void (^)(void))completion;
+
 @end

@@ -82,15 +82,19 @@
     [self.presentingViewController addChildViewController:self.contentViewController];
     [self.presentingViewController.view addSubview:self.popoverView];
     [self.contentViewController didMoveToParentViewController:self.presentingViewController];
+    
+    [self.popoverView animatePresentationWithCompletion:nil];
 }
 
 - (void)dismiss {
-    [self.contentViewController willMoveToParentViewController:nil];
-    [self.popoverView removeFromSuperview];
-    [self.contentViewController removeFromParentViewController];
-    
-    NSLog(@"dismiss");
-    self.contentViewController.RWBlurPopover_associatedPopover = nil;
+    [self.popoverView animateDismissalWithCompletion:^{
+        [self.contentViewController willMoveToParentViewController:nil];
+        [self.popoverView removeFromSuperview];
+        [self.contentViewController removeFromParentViewController];
+        
+        NSLog(@"dismiss");
+        self.contentViewController.RWBlurPopover_associatedPopover = nil;
+    }];
 }
 
 @end
