@@ -64,15 +64,12 @@
     return self;
 }
 
-- (BOOL)isThrowingGestureEnabled {
-    return self.popoverView.isThrowingGestureEnabled;
-}
-
 - (void)setThrowingGestureEnabled:(BOOL)throwingGestureEnabled {
+    _throwingGestureEnabled = throwingGestureEnabled;
     [self.popoverView setThrowingGestureEnabled:throwingGestureEnabled];
 }
 
-- (void)showFromViewController:(UIViewController *)presentingViewController {
+- (void)showInViewController:(UIViewController *)presentingViewController {
     if (presentingViewController.RWBlurPopover_associatedPopover != nil) {
         NSLog(@"failed to present a RWBlurPopover while another popover is presenting. ");
         return;
@@ -86,6 +83,7 @@
     self.popoverView.frame = self.presentingViewController.view.bounds;
     self.popoverView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.popoverView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.popoverView.throwingGestureEnabled = self.throwingGestureEnabled;
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
     [self.popoverView.blurView addGestureRecognizer:tapGesture];
@@ -101,11 +99,16 @@
         [strongSelf.popoverView removeFromSuperview];
         [strongSelf.contentViewController removeFromParentViewController];
         
+        strongSelf.popoverView = nil;
         strongSelf.contentViewController.RWBlurPopover_associatedPopover = nil;
         strongSelf.presentingViewController.RWBlurPopover_associatedPopover = nil;
     };
     
     [self.popoverView animatePresentation];
+}
+
+- (void)dealloc {
+    NSLog(@"RWBlurPopover dealloc");
 }
 
 - (void)dismiss {
@@ -114,6 +117,14 @@
 
 - (void)dismissWithCompletion:(dispatch_block_t)completion {
     [self.popoverView animateDismissalWithCompletion:completion];
+}
+
++ (void)showContentViewController:(UIViewController *)contentViewController
+             insideViewController:(UIViewController *)presentingViewController
+       withThrowingGestureEnabled:(BOOL)throwingGestureEnabled {
+    RWBlurPopover *popoer = [[RWBlurPopover alloc] initWithContentViewController:contentViewController];
+    popoer.throwingGestureEnabled = throwingGestureEnabled;
+    [popoer showInViewController:presentingViewController];
 }
 
 @end

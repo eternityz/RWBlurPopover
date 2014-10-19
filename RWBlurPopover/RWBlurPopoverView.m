@@ -45,6 +45,10 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
 
 @implementation RWBlurPopoverView
 
+- (void)dealloc {
+    NSLog(@"RWBlurPopoverView dealloc");
+}
+
 - (instancetype)initWithContentView:(UIView *)contentView contentSize:(CGSize)contentSize {
     self = [super init];
     if (self) {
@@ -125,7 +129,7 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
         if (arc4random() % 2 == 1) {
             angularVelocity = -M_PI_2;
         }
-        angularVelocity *= 0.75;
+        angularVelocity *= 0.5;
         [itemBehavior addAngularVelocity:angularVelocity forItem:self.contentView];
     }
     
@@ -219,15 +223,16 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
     [itemBehavior addAngularVelocity:self.interactiveAngularVelocity forItem:self.contentView];
     [itemBehavior setAngularResistance:2];
     
+    __weak typeof(self) weakSelf = self;
     itemBehavior.action = ^{
-        if (!CGRectIntersectsRect(self.bounds, self.contentView.frame))
+        if (!CGRectIntersectsRect(weakSelf.bounds, weakSelf.contentView.frame))
         {
-            self.state = RWBlurPopoverViewStateDismissed;
-            [self.animator removeAllBehaviors];
+            weakSelf.state = RWBlurPopoverViewStateDismissed;
+            [weakSelf.animator removeAllBehaviors];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (self.dismissalBlock) {
-                    self.dismissalBlock();
+                if (weakSelf.dismissalBlock) {
+                    weakSelf.dismissalBlock();
                 }
             });
         }

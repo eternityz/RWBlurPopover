@@ -45,17 +45,18 @@
     self.navigationItem.title = @"Demo";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Show" style:UIBarButtonItemStylePlain target:self action:@selector(showTestPopover)];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && self.modalPresentationStyle != UIModalPresentationFormSheet) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Form Sheet" style:UIBarButtonItemStylePlain target:self action:@selector(showFormSheet)];
-    } else  {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (self.modalPresentationStyle != UIModalPresentationFormSheet) {
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Form Sheet" style:UIBarButtonItemStylePlain target:self action:@selector(showFormSheet)];
+        } else  {
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+        }
     }
 }
 
 - (void)showTestPopover {
     RWTestViewController *vc = [[RWTestViewController alloc] initWithNibName:nil bundle:nil];
-    RWBlurPopover *popover = [[RWBlurPopover alloc] initWithContentViewController:vc];
-    [popover showFromViewController:self];
+    [RWBlurPopover showContentViewController:vc insideViewController:self withThrowingGestureEnabled:YES];
 }
 
 @end
