@@ -12,10 +12,13 @@
 
 @property (nonatomic, strong) UIView *blurView;
 @property (nonatomic, weak) UIView *container;
+@property (nonatomic, copy) dispatch_block_t dismissalBlock;
+
+@property (nonatomic, assign, getter = isThrowingGestureEnabled) BOOL throwingGestureEnabled;
 
 - (instancetype)initWithContentView:(UIView *)contentView contentSize:(CGSize)contentSize;
 
-- (void)animatePresentationWithCompletion:(void (^)(void))completion;
-- (void)animateDismissalWithCompletion:(void (^)(void))completion;
+- (void)animatePresentation;
+- (void)animateDismissalWithCompletion:(dispatch_block_t)completion;
 
 @end

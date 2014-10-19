@@ -64,14 +64,25 @@
     return self;
 }
 
-- (void)dealloc {
-    NSLog(@"dealloc");
+- (BOOL)isThrowingGestureEnabled {
+    return self.popoverView.isThrowingGestureEnabled;
+}
+
+- (void)setThrowingGestureEnabled:(BOOL)throwingGestureEnabled {
+    [self.popoverView setThrowingGestureEnabled:throwingGestureEnabled];
 }
 
 - (void)showFromViewController:(UIViewController *)presentingViewController {
+    if (presentingViewController.RWBlurPopover_associatedPopover != nil) {
+        NSLog(@"failed to present a RWBlurPopover while another popover is presenting. ");
+        return;
+    }
+    
     self.presentingViewController = presentingViewController;
+    self.presentingViewController.RWBlurPopover_associatedPopover = self;
     
     self.popoverView = [[RWBlurPopoverView alloc] initWithContentView:self.contentViewController.view contentSize:[self.contentViewController preferredContentSize]];
+    self.popoverView.throwingGestureEnabled = self.throwingGestureEnabled;
     self.popoverView.frame = self.presentingViewController.view.bounds;
     self.popoverView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.popoverView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -83,18 +94,26 @@
     [self.presentingViewController.view addSubview:self.popoverView];
     [self.contentViewController didMoveToParentViewController:self.presentingViewController];
     
-    [self.popoverView animatePresentationWithCompletion:nil];
+    __weak typeof(self) weakSelf = self;
+    self.popoverView.dismissalBlock = ^{
+        typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf.contentViewController willMoveToParentViewController:nil];
+        [strongSelf.popoverView removeFromSuperview];
+        [strongSelf.contentViewController removeFromParentViewController];
+        
+        strongSelf.contentViewController.RWBlurPopover_associatedPopover = nil;
+        strongSelf.presentingViewController.RWBlurPopover_associatedPopover = nil;
+    };
+    
+    [self.popoverView animatePresentation];
 }
 
 - (void)dismiss {
-    [self.popoverView animateDismissalWithCompletion:^{
-        [self.contentViewController willMoveToParentViewController:nil];
-        [self.popoverView removeFromSuperview];
-        [self.contentViewController removeFromParentViewController];
-        
-        NSLog(@"dismiss");
-        self.contentViewController.RWBlurPopover_associatedPopover = nil;
-    }];
+    [self.popoverView animateDismissalWithCompletion:nil];
+}
+
+- (void)dismissWithCompletion:(dispatch_block_t)completion {
+    [self.popoverView animateDismissalWithCompletion:completion];
 }
 
 @end
@@ -106,7 +125,7 @@
     if (popover) {
         // this view controller is displayed inside a RWBlurPopover
         // and about to be dismissed
-        [popover dismiss];
+        [popover dismissWithCompletion:completion];
     } else {
         // perform regular dismissal
         [self RWBlurPopover_dismissViewControllerAnimated:flag completion:completion];

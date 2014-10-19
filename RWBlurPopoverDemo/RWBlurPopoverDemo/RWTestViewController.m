@@ -19,8 +19,10 @@
 }
 
 - (void)dismiss {
-    NSLog(@"content dismiss");
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"content issued dismissal started");
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"content issued dismissal ended");
+    }];
 }
 
 - (void)viewDidLoad {

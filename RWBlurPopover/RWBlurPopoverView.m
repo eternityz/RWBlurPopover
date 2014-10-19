@@ -18,7 +18,8 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
     RWBlurPopoverViewStateInitial = 0,
     RWBlurPopoverViewStatePresenting,
     RWBlurPopoverViewStateShowing,
-    RWBlurPopoverViewStateDismissing,
+    RWBlurPopoverViewStateInteractiveDismissing,
+    RWBlurPopoverViewStateAnimatedDismissing,
     RWBlurPopoverViewStateDismissed,
 };
 
@@ -30,6 +31,15 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
 @property (nonatomic, assign) RWBlurPopoverViewState state;
 
 @property (nonatomic, strong) UIDynamicAnimator *animator;
+@property (nonatomic, strong) UIAttachmentBehavior *attachmentBehavior;
+
+@property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
+
+@property (nonatomic, assign) CGPoint interactiveStartPoint;
+// compute angular velocity
+@property (nonatomic, assign) CFTimeInterval interactiveLastTime;
+@property (nonatomic, assign) CGFloat interactiveLastAngle;
+@property (nonatomic, assign) CGFloat interactiveAngularVelocity;
 
 @end
 
@@ -57,15 +67,17 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
         [self.container addSubview:self.contentView];
         
         [self configureViewForState:self.state];
+        
+        [self.contentView addGestureRecognizer:self.panGesture];
     }
     return self;
 }
 
 - (void)configureViewForState:(RWBlurPopoverViewState)state {
-    if (state == RWBlurPopoverViewStateShowing) {
+    if (state >= RWBlurPopoverViewStateShowing) {
         self.contentView.transform = CGAffineTransformIdentity;
     } else  {
-        self.contentView.transform = CGAffineTransformMakeTranslation(0, (CGRectGetHeight(self.container.bounds) - self.contentSize.height) / 2.0);
+        self.contentView.transform = CGAffineTransformMakeTranslation(0, -(CGRectGetHeight(self.container.bounds) - self.contentSize.height) / 2.0);
     }
     
 }
@@ -85,21 +97,21 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
     }
 }
 
-- (void)animatePresentationWithCompletion:(void (^)(void))completion {
+- (void)animatePresentation {
     [self configureViewForState:RWBlurPopoverViewStateInitial];
     self.state = RWBlurPopoverViewStatePresenting;
     [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:0 animations:^{
         [self configureViewForState:RWBlurPopoverViewStateShowing];
     } completion:^(BOOL finished) {
         self.state = RWBlurPopoverViewStateShowing;
-        if (completion) {
-            completion();
-        }
     }];
 }
 
 - (void)animateDismissalWithCompletion:(void (^)(void))completion {
-    self.state = RWBlurPopoverViewStateDismissing;
+    if (self.state >= RWBlurPopoverViewStateAnimatedDismissing) {
+        return;
+    }
+    self.state = RWBlurPopoverViewStateAnimatedDismissing;
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.container];
     
     UIGravityBehavior *gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.contentView]];
@@ -113,6 +125,7 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
         if (arc4random() % 2 == 1) {
             angularVelocity = -M_PI_2;
         }
+        angularVelocity *= 0.75;
         [itemBehavior addAngularVelocity:angularVelocity forItem:self.contentView];
     }
     
@@ -127,10 +140,136 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
             strongSelf.animator = nil;
             
             strongSelf.state = RWBlurPopoverViewStateDismissed;
-            completion();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self.dismissalBlock) {
+                    self.dismissalBlock();
+                }
+                if (completion) {
+                    completion();
+                }
+            });
         }
     };
 
+}
+
+- (UIPanGestureRecognizer *)panGesture {
+    if (!_panGesture) {
+        _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    }
+    return _panGesture;
+}
+
+- (void)setThrowingGestureEnabled:(BOOL)throwingGestureEnabled {
+    if (_throwingGestureEnabled != throwingGestureEnabled) {
+        if (throwingGestureEnabled) {
+            [self.contentView addGestureRecognizer:self.panGesture];
+        } else {
+            [self.contentView removeGestureRecognizer:self.panGesture];
+        }
+    }
+    
+    _throwingGestureEnabled = throwingGestureEnabled;
+}
+
+- (void)startInteractiveTransitionWithTouchLocation:(CGPoint)location {
+    self.state = RWBlurPopoverViewStateInteractiveDismissing;
+    self.interactiveStartPoint = location;
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
+    CGPoint anchorPoint = self.interactiveStartPoint;
+    UIOffset anchorOffset = UIOffsetMake(anchorPoint.x - CGRectGetMidX(self.contentView.frame), anchorPoint.y - CGRectGetMidY(self.contentView.frame));
+    self.attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.contentView offsetFromCenter:anchorOffset attachedToAnchor:anchorPoint];
+
+    // http://stackoverflow.com/questions/21325057/implement-uikitdynamics-for-dragging-view-off-screen
+    self.interactiveLastTime = CACurrentMediaTime();
+    self.interactiveLastAngle = angleOfView(self.contentView);
+    __weak typeof(self) weakSelf = self;
+    self.attachmentBehavior.action = ^{
+        typeof(weakSelf) strongSelf = weakSelf;
+        CFTimeInterval t = CACurrentMediaTime();
+        CGFloat angle = angleOfView(strongSelf.contentView);
+        if (t > strongSelf.interactiveLastTime)
+        {
+            CGFloat av = (angle - strongSelf.interactiveLastAngle) / (t - strongSelf.interactiveLastTime);
+            if (fabs(av) > 1E-6)
+            {
+                strongSelf.interactiveAngularVelocity = av;
+                strongSelf.interactiveLastTime = t;
+                strongSelf.interactiveLastAngle = angle;
+            }
+        }
+    };
+    
+    [self.animator addBehavior:self.attachmentBehavior];
+}
+
+- (void)updateInteractiveTransitionWithTouchLocation:(CGPoint)location {
+    self.attachmentBehavior.anchorPoint = location;
+}
+
+- (void)finishInteractiveTransitionWithTouchLocation:(CGPoint)location velocity:(CGPoint)velocity {
+    // http://stackoverflow.com/questions/21325057/implement-uikitdynamics-for-dragging-view-off-screen
+    
+    self.state = RWBlurPopoverViewStateAnimatedDismissing;
+
+    [self.animator removeAllBehaviors];
+    
+    UIDynamicItemBehavior *itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.contentView]];
+    [itemBehavior addLinearVelocity:velocity forItem:self.contentView];
+    [itemBehavior addAngularVelocity:self.interactiveAngularVelocity forItem:self.contentView];
+    [itemBehavior setAngularResistance:2];
+    
+    itemBehavior.action = ^{
+        if (!CGRectIntersectsRect(self.bounds, self.contentView.frame))
+        {
+            self.state = RWBlurPopoverViewStateDismissed;
+            [self.animator removeAllBehaviors];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self.dismissalBlock) {
+                    self.dismissalBlock();
+                }
+            });
+        }
+    };
+    [self.animator addBehavior:itemBehavior];
+}
+
+- (void)cancelInteractiveTransitionWithTouchLocation:(CGPoint)location {
+    [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:0 animations:^{
+        [self.animator removeAllBehaviors];
+        self.contentView.transform = CGAffineTransformIdentity;
+        self.state = RWBlurPopoverViewStateShowing;
+        [self layoutSubviews];
+        
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gr {
+    CGPoint location = [gr locationInView:self];
+    switch (gr.state) {
+        case UIGestureRecognizerStateBegan: {
+            [self startInteractiveTransitionWithTouchLocation:location];
+            break;
+        }
+            
+        case UIGestureRecognizerStateChanged: {
+            [self updateInteractiveTransitionWithTouchLocation:location];
+            break;
+        }
+            
+        case UIGestureRecognizerStateEnded: case UIGestureRecognizerStateCancelled: {
+            CGPoint velocity = [gr velocityInView:self];
+            if (fabs(velocity.x) + fabs(velocity.y) <= 1000 || gr.state == UIGestureRecognizerStateCancelled) {
+                [self cancelInteractiveTransitionWithTouchLocation:location];
+            } else {
+                [self finishInteractiveTransitionWithTouchLocation:location velocity:velocity];
+            }
+
+        }
+        default: break;
+    }
 }
 
 @end
