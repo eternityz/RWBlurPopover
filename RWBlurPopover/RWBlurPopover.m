@@ -116,10 +116,8 @@
 }
 
 + (void)showContentViewController:(UIViewController *)contentViewController
-             insideViewController:(UIViewController *)presentingViewController
-       withThrowingGestureEnabled:(BOOL)throwingGestureEnabled {
+             insideViewController:(UIViewController *)presentingViewController {
     RWBlurPopover *popoer = [[RWBlurPopover alloc] initWithContentViewController:contentViewController];
-    popoer.throwingGestureEnabled = throwingGestureEnabled;
     [popoer showInViewController:presentingViewController];
 }
 

@@ -4,21 +4,21 @@ RWBlurPopover
 Show a UIViewController in a popover with background blurred. Introduced in [China Air Quality Index](http://air.fresh-ideas.cc).
 
 <p align="center">
-    <a href="http://zhangbin.cc/temp/RWBlurPopover2/demo.mp4"><img src="https://raw.github.com/eternityz/RWBlurPopover/master/demo.gif" /></a>
+    <a href="http://zhangbin.cc/temp/RWBlurPopover3/demo.mp4"><img src="https://raw.github.com/eternityz/RWBlurPopover/master/demo.gif" /></a>
 </p>
 
-[Demo Video](http://zhangbin.cc/temp/RWBlurPopover2/demo.mp4)
+[Demo Video](http://zhangbin.cc/temp/RWBlurPopover3/demo.mp4)
 
 iOS 7.0+ is required. "Throwing away to dismiss" gesture is inspired by [Tweetbot](http://tapbots.com/software/tweetbot/).
 
-NOTE: Release 2.0.0 of RWBlurPopover is incompatible with previous releases.
+NOTE: Release 3.0.0 of RWBlurPopover is incompatible with previous releases.
 
 Installation
 ----
 
 - Add a pod description into your `podfile`:
 
-            pod 'RWBlurPopover', '~> 2.0.0'
+            pod 'RWBlurPopover', '~> 3.0.0'
 
 OR
 
@@ -31,15 +31,14 @@ Useage
 - Present a UIViewController inside a popover with background blurred:
 
 ```objective-c
-UIViewController *popoverContentViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
-RWBlurPopover *popover = [[RWBlurPopover alloc] initWithContentViewController:vc];
-[parentViewController presentViewController:popover animated:YES completion:nil];
+[RWBlurPopover showContentViewController:contentViewController insideViewController:presentingViewController];
+
 ```
 
 - Dismiss the view controller presented by RWBlurPopover:
 
 ```objective-c
-[popoverContentViewController dismissViewControllerAnimated:YES completion:nil];
+[contentViewController dismissViewControllerAnimated:YES completion:nil];
 ```
 
 License

@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
             UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:self.bounds];
             toolbar.barStyle = UIBarStyleBlack;
             self.blurView = toolbar;
-            self.container = self;
+            self.container = toolbar;
         }
         
         [self addSubview:self.blurView];
@@ -69,7 +69,6 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
         [self configureViewForState:self.state];
         
         [self.contentView addGestureRecognizer:self.panGesture];
-        // self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return self;
 }

@@ -56,7 +56,7 @@
 
 - (void)showTestPopover {
     RWTestViewController *vc = [[RWTestViewController alloc] initWithNibName:nil bundle:nil];
-    [RWBlurPopover showContentViewController:vc insideViewController:self withThrowingGestureEnabled:YES];
+    [RWBlurPopover showContentViewController:vc insideViewController:self];
 }
 
 @end

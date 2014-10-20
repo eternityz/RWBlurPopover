@@ -22,7 +22,6 @@
 
 /// convenient method
 + (void)showContentViewController:(UIViewController *)contentViewController
-             insideViewController:(UIViewController *)presentingViewController
-       withThrowingGestureEnabled:(BOOL)throwingGestureEnabled;
+             insideViewController:(UIViewController *)presentingViewController;
 
 @end
