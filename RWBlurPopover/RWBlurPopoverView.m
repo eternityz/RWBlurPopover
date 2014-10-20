@@ -45,10 +45,6 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
 
 @implementation RWBlurPopoverView
 
-- (void)dealloc {
-    NSLog(@"RWBlurPopoverView dealloc");
-}
-
 - (instancetype)initWithContentView:(UIView *)contentView contentSize:(CGSize)contentSize {
     self = [super init];
     if (self) {
@@ -59,7 +55,7 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
         if (NSClassFromString(@"UIVisualEffectView") != nil) {
             UIVisualEffectView *v = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
             self.blurView = v;
-            self.container = self;
+            self.container = v.contentView;
         } else {
             UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:self.bounds];
             toolbar.barStyle = UIBarStyleBlack;
@@ -73,6 +69,7 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
         [self configureViewForState:self.state];
         
         [self.contentView addGestureRecognizer:self.panGesture];
+        // self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return self;
 }
@@ -80,8 +77,11 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
 - (void)configureViewForState:(RWBlurPopoverViewState)state {
     if (state >= RWBlurPopoverViewStateShowing) {
         self.contentView.transform = CGAffineTransformIdentity;
+        // self.contentView.alpha = 1.0;
     } else  {
-        self.contentView.transform = CGAffineTransformMakeTranslation(0, -(CGRectGetHeight(self.container.bounds) - self.contentSize.height) / 2.0);
+        CGFloat offset = (CGRectGetHeight(self.container.bounds) + self.contentSize.height) / 2.0;
+        self.contentView.transform = CGAffineTransformMakeTranslation(0, -offset);
+        // self.contentView.alpha = 0;
     }
     
 }
@@ -102,9 +102,10 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
 }
 
 - (void)animatePresentation {
+    [self layoutSubviews];
     [self configureViewForState:RWBlurPopoverViewStateInitial];
     self.state = RWBlurPopoverViewStatePresenting;
-    [UIView animateWithDuration:0.4 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:0 animations:^{
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:0 animations:^{
         [self configureViewForState:RWBlurPopoverViewStateShowing];
     } completion:^(BOOL finished) {
         self.state = RWBlurPopoverViewStateShowing;

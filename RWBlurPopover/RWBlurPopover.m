@@ -107,10 +107,6 @@
     [self.popoverView animatePresentation];
 }
 
-- (void)dealloc {
-    NSLog(@"RWBlurPopover dealloc");
-}
-
 - (void)dismiss {
     [self.popoverView animateDismissalWithCompletion:nil];
 }
