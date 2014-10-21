@@ -14,6 +14,7 @@
 @interface UIViewController (RWBlurPopover)
 
 - (void)RWBlurPopover_dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion;
+
 @property (nonatomic, strong) RWBlurPopover *RWBlurPopover_associatedPopover;
 
 @end
@@ -27,27 +28,27 @@
 
 @end
 
+static void swizzleMethod(Class class, SEL originSelector, SEL swizzledSelector) {
+    Method originMethod = class_getInstanceMethod(class, originSelector);
+    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+    
+    BOOL didAddMethod = class_addMethod(class, originSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
+    
+    if (didAddMethod) {
+        class_replaceMethod(class, swizzledSelector, method_getImplementation(originMethod), method_getTypeEncoding(originMethod));
+    } else {
+        method_exchangeImplementations(originMethod, swizzledMethod);
+    }
+}
+
 @implementation RWBlurPopover
 
 + (void)load {
-    // use method swizzling to capture content view controller 'dismissViewController' message
+    // use method swizzling to capture content view controller 'dismissViewController' message and 'presentingViewController' message
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Class viewControllerClass = [UIViewController class];
-        
-        SEL origSelector = @selector(dismissViewControllerAnimated:completion:);
-        SEL swizzledSelector = @selector(RWBlurPopover_dismissViewControllerAnimated:completion:);
-        
-        Method origMethod = class_getInstanceMethod(viewControllerClass, origSelector);
-        Method swizzledMethod = class_getInstanceMethod(viewControllerClass, swizzledSelector);
-        
-        BOOL didAddMethod = class_addMethod(viewControllerClass, origSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
-        
-        if (didAddMethod) {
-            class_replaceMethod(viewControllerClass, swizzledSelector, method_getImplementation(origMethod), method_getTypeEncoding(origMethod));
-        } else {
-            method_exchangeImplementations(origMethod, swizzledMethod);
-        }
+        swizzleMethod([UIViewController class], @selector(dismissViewControllerAnimated:completion:), @selector(RWBlurPopover_dismissViewControllerAnimated:completion:));
     });
 }
 
@@ -126,7 +127,13 @@
 @implementation UIViewController (RWBlurPopover_dismiss)
 
 - (void)RWBlurPopover_dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    UIViewController *presented = self;
     RWBlurPopover *popover = self.RWBlurPopover_associatedPopover;
+    while (popover == nil && presented != nil) {
+        popover = presented.RWBlurPopover_associatedPopover;
+        presented = presented.parentViewController;
+    }
+    
     if (popover) {
         // this view controller is displayed inside a RWBlurPopover
         // and about to be dismissed
@@ -135,7 +142,6 @@
         // perform regular dismissal
         [self RWBlurPopover_dismissViewControllerAnimated:flag completion:completion];
     }
-    
 }
 
 static const char *RWBlurPopoverKey = "RWBlurPopoverKey";

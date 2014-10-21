@@ -56,7 +56,8 @@
 
 - (void)showTestPopover {
     RWTestViewController *vc = [[RWTestViewController alloc] initWithNibName:nil bundle:nil];
-    [RWBlurPopover showContentViewController:vc insideViewController:self];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    [RWBlurPopover showContentViewController:nav insideViewController:self];
 }
 
 @end
