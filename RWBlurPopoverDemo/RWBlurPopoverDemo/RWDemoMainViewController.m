@@ -58,6 +58,11 @@
     RWTestViewController *vc = [[RWTestViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     [RWBlurPopover showContentViewController:nav insideViewController:self];
+    
+    RWBlurPopover *popover = [[RWBlurPopover alloc] initWithContentViewController:nav];
+    popover.tapBlurToDismiss = NO;
+    popover.throwingGestureEnabled = NO;
+    [popover showInViewController:self];
 }
 
 @end

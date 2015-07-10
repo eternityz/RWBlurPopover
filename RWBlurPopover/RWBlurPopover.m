@@ -25,6 +25,7 @@
 @property (nonatomic, weak) UIViewController *contentViewController;
 @property (nonatomic, weak) UIViewController *presentingViewController;
 @property (nonatomic, strong) RWBlurPopoverView *popoverView;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 
 @end
 
@@ -59,6 +60,7 @@ static void swizzleMethod(Class class, SEL originSelector, SEL swizzledSelector)
         self.contentViewController = contentViewController;
         
         self.throwingGestureEnabled = YES;
+        self.tapBlurToDismiss = YES;
         
         self.contentViewController.RWBlurPopover_associatedPopover = self;
     }
@@ -68,6 +70,26 @@ static void swizzleMethod(Class class, SEL originSelector, SEL swizzledSelector)
 - (void)setThrowingGestureEnabled:(BOOL)throwingGestureEnabled {
     _throwingGestureEnabled = throwingGestureEnabled;
     [self.popoverView setThrowingGestureEnabled:throwingGestureEnabled];
+}
+
+- (UITapGestureRecognizer *)tapGesture {
+    if (!_tapGesture) {
+        _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+    }
+    
+    return _tapGesture;
+}
+
+- (void)setTapBlurToDismiss:(BOOL)tapBlurToDismiss {
+    _tapBlurToDismiss = tapBlurToDismiss;
+    
+    if (_tapBlurToDismiss) {
+        
+        [self.popoverView.blurView addGestureRecognizer:self.tapGesture];
+    }
+    else {
+        [self.popoverView.blurView removeGestureRecognizer:self.tapGesture];
+    }
 }
 
 - (void)showInViewController:(UIViewController *)presentingViewController {
@@ -86,8 +108,9 @@ static void swizzleMethod(Class class, SEL originSelector, SEL swizzledSelector)
     self.popoverView.translatesAutoresizingMaskIntoConstraints = YES;
     self.popoverView.throwingGestureEnabled = self.throwingGestureEnabled;
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-    [self.popoverView.blurView addGestureRecognizer:tapGesture];
+    if (self.tapBlurToDismiss) {
+        [self.popoverView.blurView addGestureRecognizer:self.tapGesture];
+    }    
     
     [self.presentingViewController addChildViewController:self.contentViewController];
     [self.presentingViewController.view addSubview:self.popoverView];
