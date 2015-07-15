@@ -10,7 +10,9 @@
 #import "RWBlurPopover.h"
 #import "RWTestViewController.h"
 
-@interface RWDemoMainViewController ()
+@interface RWDemoMainViewController () <RWDemoToggles>
+
+@property (nonatomic, weak) RWBlurPopover *currentPopover;
 
 @end
 
@@ -42,6 +44,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tapBlurToDismissEnabled = YES;
+    self.throwingGestureEnabled = YES;
     self.navigationItem.title = @"Demo";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Show" style:UIBarButtonItemStylePlain target:self action:@selector(showTestPopover)];
     
@@ -55,14 +59,28 @@
 }
 
 - (void)showTestPopover {
-    RWTestViewController *vc = [[RWTestViewController alloc] initWithNibName:nil bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+    RWTestViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"RWTestViewController"];
+    vc.delegate = self;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    [RWBlurPopover showContentViewController:nav insideViewController:self];
+    
+    // [RWBlurPopover showContentViewController:nav insideViewController:self];
     
     RWBlurPopover *popover = [[RWBlurPopover alloc] initWithContentViewController:nav];
-    popover.tapBlurToDismiss = NO;
-    popover.throwingGestureEnabled = NO;
+    popover.throwingGestureEnabled = self.throwingGestureEnabled;
+    popover.tapBlurToDismissEnabled = self.tapBlurToDismissEnabled;
     [popover showInViewController:self];
+    self.currentPopover = popover;
+}
+
+- (void)setThrowingGestureEnabled:(BOOL)throwingGestureEnabled {
+    _throwingGestureEnabled = throwingGestureEnabled;
+    self.currentPopover.throwingGestureEnabled = throwingGestureEnabled;
+}
+
+- (void)setTapBlurToDismissEnabled:(BOOL)tapBlurToDismissEnabled {
+    _tapBlurToDismissEnabled = tapBlurToDismissEnabled;
+    self.currentPopover.tapBlurToDismissEnabled = tapBlurToDismissEnabled;
 }
 
 @end

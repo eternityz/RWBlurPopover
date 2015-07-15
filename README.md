@@ -17,9 +17,9 @@ Installation
 ----
 
 - Add a pod description into your `podfile`:
-
-            pod 'RWBlurPopover', '~> 3.0.0'
-
+```
+pod 'RWBlurPopover', '~> 3.0.0'
+```
 OR
 
 - Clone this repo, drop `.h` and `.m` files from `RWBlurPopover` into your project.
@@ -34,23 +34,24 @@ Useage
 [RWBlurPopover showContentViewController:contentViewController insideViewController:presentingViewController];
 ```
 
-- Another way:
+OR:
+
 ```objective-c
 RWBlurPopover *popover = [[RWBlurPopover alloc] initWithContentViewController:nav];
 [popover showInViewController:self];
 ```
 
-- Disable dismiss when tap on blur background view(default is enabled):
+- Disable dismissing by tapping on blur background view (default is enabled):
 ```objective-c
 popover.tapBlurToDismiss = NO;
 ```
 
-- Disable dismiss with throw gesture(default is enabled):
+- Disable dismissing by "throwing" gesture (default is enabled):
 ```objective-c
 popover.throwingGestureEnabled = NO;
 ```
 
-- Dismiss the view controller presented by RWBlurPopover:
+- Dismiss the view controller presented by RWBlurPopover programmatically:
 
 ```objective-c
 [contentViewController dismissViewControllerAnimated:YES completion:nil];

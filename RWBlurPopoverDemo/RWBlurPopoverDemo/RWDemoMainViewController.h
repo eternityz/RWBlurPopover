@@ -10,4 +10,7 @@
 
 @interface RWDemoMainViewController : UIViewController
 
+@property (nonatomic, assign, getter = isThrowingGestureEnabled) BOOL throwingGestureEnabled;
+@property (nonatomic, assign, getter = isTapBlurToDismissEnabled) BOOL tapBlurToDismissEnabled;
+
 @end

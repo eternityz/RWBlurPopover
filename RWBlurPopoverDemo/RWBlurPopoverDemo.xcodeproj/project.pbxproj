@@ -23,7 +23,8 @@
 		3A308EBD196A8B7E0030C75A /* pic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A308EBC196A8B7E0030C75A /* pic.jpg */; };
 		3A308EC0196A8BA70030C75A /* RWDemoMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A308EBF196A8BA70030C75A /* RWDemoMainViewController.m */; };
 		3A308EC4196A8D480030C75A /* RWTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A308EC2196A8D480030C75A /* RWTestViewController.m */; };
-		3A308EC5196A8D480030C75A /* RWTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A308EC3196A8D480030C75A /* RWTestViewController.xib */; };
+		3A36C6CF1B560B6B00AEBADD /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A36C6CE1B560B6B00AEBADD /* Storyboard.storyboard */; };
+		3A36C6D11B560F5600AEBADD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A36C6D01B560F5600AEBADD /* LaunchScreen.storyboard */; };
 		3A9307F119EF86D100F089BA /* RWBlurPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9307F019EF86D100F089BA /* RWBlurPopoverView.m */; };
 /* End PBXBuildFile section */
 
@@ -61,7 +62,8 @@
 		3A308EBF196A8BA70030C75A /* RWDemoMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWDemoMainViewController.m; sourceTree = "<group>"; };
 		3A308EC1196A8D480030C75A /* RWTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWTestViewController.h; sourceTree = "<group>"; };
 		3A308EC2196A8D480030C75A /* RWTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWTestViewController.m; sourceTree = "<group>"; };
-		3A308EC3196A8D480030C75A /* RWTestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RWTestViewController.xib; sourceTree = "<group>"; };
+		3A36C6CE1B560B6B00AEBADD /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		3A36C6D01B560F5600AEBADD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3A9307EF19EF86D100F089BA /* RWBlurPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWBlurPopoverView.h; sourceTree = "<group>"; };
 		3A9307F019EF86D100F089BA /* RWBlurPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWBlurPopoverView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,7 +133,8 @@
 				3A308EBF196A8BA70030C75A /* RWDemoMainViewController.m */,
 				3A308EC1196A8D480030C75A /* RWTestViewController.h */,
 				3A308EC2196A8D480030C75A /* RWTestViewController.m */,
-				3A308EC3196A8D480030C75A /* RWTestViewController.xib */,
+				3A36C6CE1B560B6B00AEBADD /* Storyboard.storyboard */,
+				3A36C6D01B560F5600AEBADD /* LaunchScreen.storyboard */,
 				3A308E89196A6DDC0030C75A /* Images.xcassets */,
 				3A308E7E196A6DDC0030C75A /* Supporting Files */,
 			);
@@ -256,9 +259,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A308EBD196A8B7E0030C75A /* pic.jpg in Resources */,
-				3A308EC5196A8D480030C75A /* RWTestViewController.xib in Resources */,
 				3A308E82196A6DDC0030C75A /* InfoPlist.strings in Resources */,
 				3A308E8A196A6DDC0030C75A /* Images.xcassets in Resources */,
+				3A36C6D11B560F5600AEBADD /* LaunchScreen.storyboard in Resources */,
+				3A36C6CF1B560B6B00AEBADD /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

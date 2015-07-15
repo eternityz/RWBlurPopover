@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
 @interface RWBlurPopoverView ()
 
 @property (nonatomic, strong) UIView *contentView;
+@property (nonatomic, strong) UIView *backgroundTappingView;
 @property (nonatomic, assign) CGSize contentSize;
 
 @property (nonatomic, assign) RWBlurPopoverViewState state;
@@ -34,6 +35,7 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
 @property (nonatomic, strong) UIAttachmentBehavior *attachmentBehavior;
 
 @property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
+@property (nonatomic, strong) UITapGestureRecognizer *backgroundTapGesture;
 
 @property (nonatomic, assign) CGPoint interactiveStartPoint;
 // compute angular velocity
@@ -64,6 +66,12 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
         }
         
         [self addSubview:self.blurView];
+        
+        self.backgroundTappingView = [[UIView alloc] init];
+        self.backgroundTappingView.backgroundColor = [UIColor clearColor];
+        [self.backgroundTappingView addGestureRecognizer:self.backgroundTapGesture];
+        
+        [self.container addSubview:self.backgroundTappingView];
         [self.container addSubview:self.contentView];
         
         [self configureViewForState:self.state];
@@ -90,6 +98,7 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
     [super layoutSubviews];
     
     self.blurView.frame = self.bounds;
+    self.backgroundTappingView.frame = self.container.bounds;
     
     if (self.state <= RWBlurPopoverViewStateShowing) {
         self.contentView.frame = CGRectMake((CGRectGetWidth(self.container.bounds) - self.contentSize.width) / 2.0,
@@ -164,16 +173,27 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
     return _panGesture;
 }
 
-- (void)setThrowingGestureEnabled:(BOOL)throwingGestureEnabled {
-    if (_throwingGestureEnabled != throwingGestureEnabled) {
-        if (throwingGestureEnabled) {
-            [self.contentView addGestureRecognizer:self.panGesture];
-        } else {
-            [self.contentView removeGestureRecognizer:self.panGesture];
-        }
+- (UITapGestureRecognizer *)backgroundTapGesture {
+    if (!_backgroundTapGesture) {
+        _backgroundTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleBackgroundTapGesture:)];
     }
-    
-    _throwingGestureEnabled = throwingGestureEnabled;
+    return _backgroundTapGesture;
+}
+
+- (void)setThrowingGestureEnabled:(BOOL)throwingGestureEnabled {
+    [self.panGesture setEnabled:throwingGestureEnabled];
+}
+
+- (BOOL)isThrowingGestureEnabled {
+    return self.panGesture.isEnabled;
+}
+
+- (void)setTapBlurToDismissEnabled:(BOOL)tapBlurToDismissEnabled {
+    [self.backgroundTapGesture setEnabled:tapBlurToDismissEnabled];
+}
+
+- (BOOL)isTapBlurToDismissEnabled {
+    return self.backgroundTapGesture.enabled;
 }
 
 - (void)startInteractiveTransitionWithTouchLocation:(CGPoint)location {
@@ -275,6 +295,10 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
         }
         default: break;
     }
+}
+
+- (void)handleBackgroundTapGesture:(UITapGestureRecognizer *)gr {
+    [self animateDismissalWithCompletion:nil];
 }
 
 @end

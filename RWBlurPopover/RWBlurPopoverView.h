@@ -15,6 +15,7 @@
 @property (nonatomic, copy) dispatch_block_t dismissalBlock;
 
 @property (nonatomic, assign, getter = isThrowingGestureEnabled) BOOL throwingGestureEnabled;
+@property (nonatomic, assign, getter = isTapBlurToDismissEnabled) BOOL tapBlurToDismissEnabled;
 
 - (instancetype)initWithContentView:(UIView *)contentView contentSize:(CGSize)contentSize;
 
