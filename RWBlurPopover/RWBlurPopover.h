@@ -17,6 +17,9 @@
 /// set to YES if you want content view controller to be dismissed by "throwing away"
 @property (nonatomic, assign, getter = isThrowingGestureEnabled) BOOL throwingGestureEnabled;
 
+/// set to YES if you don't want content view controller to be dissmissed by tap background blur view
+@property (nonatomic, assign) BOOL tapBlurToDismiss;
+
 /// shows a popover inside presenting view controller
 - (void)showInViewController:(UIViewController *)presentingViewController;
 

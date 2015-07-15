@@ -32,7 +32,22 @@ Useage
 
 ```objective-c
 [RWBlurPopover showContentViewController:contentViewController insideViewController:presentingViewController];
+```
 
+- Another way:
+```objective-c
+RWBlurPopover *popover = [[RWBlurPopover alloc] initWithContentViewController:nav];
+[popover showInViewController:self];
+```
+
+- Disable dismiss when tap on blur background view(default is enabled):
+```objective-c
+popover.tapBlurToDismiss = NO;
+```
+
+- Disable dismiss with throw gesture(default is enabled):
+```objective-c
+popover.throwingGestureEnabled = NO;
 ```
 
 - Dismiss the view controller presented by RWBlurPopover:
