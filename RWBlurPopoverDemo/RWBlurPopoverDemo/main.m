@@ -2,17 +2,17 @@
 //  main.m
 //  RWBlurPopoverDemo
 //
-//  Created by Bin Zhang on 13-4-19.
-//  Copyright (c) 2013年 Fresh-Ideas Studio. All rights reserved.
+//  Created by Zhang Bin on 2014-07-07.
+//  Copyright (c) 2014年 Zhang Bin. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-#import "AppDelegate.h"
+#import "RWAppDelegate.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([RWAppDelegate class]));
     }
 }
