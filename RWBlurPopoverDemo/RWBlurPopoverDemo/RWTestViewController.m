@@ -54,5 +54,24 @@
         self.contentTapGesture.enabled = self.tapContentToDismissSwitch.on;
     }
 }
+
+- (IBAction)testAlert:(id)sender {
+    if (NSClassFromString(@"UIAlertController") != nil) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Test Alert" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Test Alert" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell.reuseIdentifier isEqualToString:@"TestAlert"]) {
+        [self testAlert:cell];
+    }
+}
     
 @end

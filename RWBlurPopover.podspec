@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "RWBlurPopover"
-  s.version      = "3.1.0"
+  s.version      = "3.1.1"
   s.summary      = "Show a UIViewController in a popover with background blurred. "
 
   s.description  = <<-DESC
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "7.0"
 
-  s.source       = { :git => "https://github.com/eternityz/RWBlurPopover.git", :tag => "3.1.0" }
+  s.source       = { :git => "https://github.com/eternityz/RWBlurPopover.git", :tag => "3.1.1" }
 
   s.source_files  = "RWBlurPopover", "RWBlurPopover/**/*.{h,m}"
 

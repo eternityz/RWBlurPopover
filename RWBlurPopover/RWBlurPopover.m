@@ -133,9 +133,12 @@ static void swizzleMethod(Class class, SEL originSelector, SEL swizzledSelector)
 - (void)RWBlurPopover_dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
     UIViewController *presented = self;
     RWBlurPopover *popover = self.RWBlurPopover_associatedPopover;
-    while (popover == nil && presented != nil) {
+    
+    // if the content view controller is a navigation controller,
+    // dismissing the navgation content should dismiss the popover
+    if (presented.navigationController != nil && presented.navigationController.RWBlurPopover_associatedPopover != nil) {
+        presented = presented.navigationController;
         popover = presented.RWBlurPopover_associatedPopover;
-        presented = presented.parentViewController;
     }
     
     if (popover) {
