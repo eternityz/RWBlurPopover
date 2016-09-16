@@ -77,6 +77,7 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
         [self configureViewForState:self.state];
         
         [self.contentView addGestureRecognizer:self.panGesture];
+        
     }
     return self;
 }
@@ -149,13 +150,15 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
     itemBehavior.action = ^{
         if (!CGRectIntersectsRect(self.container.bounds, self.contentView.frame)) {
             typeof(weakSelf) strongSelf = weakSelf;
+            
             [strongSelf.animator removeAllBehaviors];
             strongSelf.animator = nil;
             
             strongSelf.state = RWBlurPopoverViewStateDismissed;
+            
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (self.dismissalBlock) {
-                    self.dismissalBlock();
+                if (strongSelf.dismissalBlock) {
+                    strongSelf.dismissalBlock();
                 }
                 if (completion) {
                     completion();
@@ -197,6 +200,9 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
 }
 
 - (void)startInteractiveTransitionWithTouchLocation:(CGPoint)location {
+    self.contentView.layer.shouldRasterize = YES;
+    self.contentView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+
     self.state = RWBlurPopoverViewStateInteractiveDismissing;
     self.interactiveStartPoint = location;
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
@@ -291,6 +297,8 @@ typedef NS_ENUM(NSInteger, RWBlurPopoverViewState) {
             } else {
                 [self finishInteractiveTransitionWithTouchLocation:location velocity:velocity];
             }
+            
+            self.contentView.layer.shouldRasterize = NO;
 
         }
         default: break;

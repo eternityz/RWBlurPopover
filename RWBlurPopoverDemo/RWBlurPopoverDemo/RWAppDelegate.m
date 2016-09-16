@@ -19,6 +19,7 @@
     RWDemoMainViewController *vc = [[RWDemoMainViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.barStyle = UIBarStyleBlack;
+    nav.navigationBar.translucent = NO;
     
     self.window.rootViewController = nav;
     
