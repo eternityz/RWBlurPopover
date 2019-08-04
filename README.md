@@ -24,7 +24,7 @@ OR
 
 - Clone this repo, drop `.h` and `.m` files from `RWBlurPopover` into your project.
 
-Useage
+Usage
 ----
 - Include RWBlurPopover whenever you need it with `#import <RWBlurPopover/RWBlurPopover.h>`.
 
